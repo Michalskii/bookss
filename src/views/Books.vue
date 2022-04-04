@@ -245,6 +245,8 @@
                   <v-select
                     :items="authors"
                     label="Author"
+                    item-text='fullName'
+                    item-value='id'
                     required
                     v-model='book.author'></v-select>
                 </v-col>
@@ -257,9 +259,9 @@
                  <!-- <select v-model='book.genreId'>
                       <option v-for='genre in genres' :value="genre.id">{{genre.name}}</option>
                   </select> -->
-                  
-        <!-- <v-select :items="genres.id" label="Genre" required  v-model='book.genreId'></v-select> -->
-        <v-select :items="genres" label="Genre" required  v-model='book.genreId'></v-select>
+
+        <v-select :items="genres" item-text='name' item-value="id" label="Genre" required  v-model='book.genreId'></v-select>
+        <!-- <v-select :items="genres" label="Genre" required  v-model='book.genreId'></v-select> -->
                   </v-col>
               </v-row>  
             </v-container>
@@ -354,16 +356,10 @@
            let author = {
                fullName: this.author.fullName,
                id: this.author.id,
-               yearBorn: this.author.yearBorn
-
-               
-           }
+               yearBorn: this.author.yearBorn}
            this.authors.push(author)
        },
-
-
-
-       },
+    },
   mounted() {
     if (localStorage.bookList) {
       this.bookList = JSON.parse(localStorage.bookList)
