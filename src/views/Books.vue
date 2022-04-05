@@ -350,15 +350,24 @@
                id: this.genre.id
            }
            this.genres.push(genre)
+           this.genre.name = ''
+           this.genre.id = ''
        },
 
        addNewAuthor() {
+           
            let author = {
                fullName: this.author.fullName,
                id: this.author.id,
                yearBorn: this.author.yearBorn}
            this.authors.push(author)
+            this.author.id = ''
+            this.author.fullName = ''
+            this.author.yearBorn = ''
+
        },
+      
+       
     },
   mounted() {
     if (localStorage.bookList) {

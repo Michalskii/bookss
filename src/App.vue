@@ -25,19 +25,14 @@ export default {
 <style >
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
 
-h1 {
-  font-family: 'Montserrat', sans-serif;
-  text-align: center;
-  font-weight: 500;
-  letter-spacing: 3px;
-  font-size: 3em;
-  margin-top: 50px;
-  
-}
+
 .nav {
   margin: auto;
-  
+  margin-top: 100px;
   font-family: 'Montserrat', sans-serif;
+  border: 1px solid;
+  border-radius: 50px;
+  padding: 30px;
   
 }
 
