@@ -235,6 +235,7 @@
                     v-model='book.released'
                     ref='form'
                     required
+                    
                   ></v-text-field>
                 </v-col>
                 
