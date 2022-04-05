@@ -1,9 +1,9 @@
 <template>
   <v-app>
-    <h1>Books <v-icon large>mdi-book-open-page-variant</v-icon></h1>
-    <nav class="nav"><router-link class="navLinks" to="/authors">Authors</router-link>
-    <router-link class="navLinks" to="/books">Books</router-link>
-    <router-link class="navLinks" to="/genres">Genres</router-link></nav>
+    
+    <nav class="nav">
+    <router-link class="navLinks" to="/books">Books <v-icon large>mdi-book-open-page-variant</v-icon></router-link>
+    </nav>
 
     <v-main class="mainSection">
       <router-view/>
@@ -18,16 +18,7 @@ export default {
 
   data: () => ({
     //
-  }),
-     
-   
- 
-
-
-
-
-
-}
+  }),}
 </script>
 
 
@@ -53,14 +44,10 @@ h1 {
 .navLinks {
   text-decoration: none;
   padding: 10px;
-  font-size: 1.5em;
+  font-size: 3em;
   
 }
 .mainSection {
   margin-top: 50px;
 }
-
-
-
-
-</style>}
+</style>

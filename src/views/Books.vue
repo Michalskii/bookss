@@ -311,7 +311,7 @@
        addAuthor: false,
        addGenre: false,
        genres: [],
-       authors: ['Mariano Italiano',],
+       authors: [],
        headers: [
         {
           text: 'Title',
@@ -364,9 +364,26 @@
     if (localStorage.bookList) {
       this.bookList = JSON.parse(localStorage.bookList)
     }
+
+   if (localStorage.genres) {
+       this.genres = JSON.parse(localStorage.genres)
+   }
+
+   if (localStorage.authors) {
+       this.authors = JSON.parse(localStorage.authors)
+   }
+
   },
   watch: {
     bookList(newBooks) {
       localStorage.bookList = JSON.stringify(newBooks);
-    }},}
+    },
+    genres(newGenres) {
+        localStorage.genres = JSON.stringify(newGenres)
+    },
+    authors(newAuthors) {
+        localStorage.authors = JSON.stringify(newAuthors)
+    }
+    
+    },}
 </script>
