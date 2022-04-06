@@ -35,7 +35,7 @@
                     label="Full name"
                     required
                     v-model='author.fullName'
-                  ></v-text-field>
+                   />
                 </v-col>
 
                  <v-col
@@ -47,7 +47,7 @@
                     label="Year born"
                     required
                     v-model='author.yearBorn'
-                  ></v-text-field>
+                   />
                 </v-col>
 
 
@@ -59,7 +59,7 @@
                   <v-text-field
                     label="ID"
                     required
-                    v-model='author.id' ></v-text-field>
+                    v-model='author.id'  />
                 </v-col>
                 
                 
@@ -124,7 +124,7 @@
                     label="Genre"
                     required
                     v-model='genre.name'
-                  ></v-text-field>
+                 />
                 </v-col>
 
                
@@ -138,7 +138,7 @@
                   <v-text-field
                     label="ID"
                     required
-                    v-model='genre.id' ></v-text-field>
+                    v-model='genre.id' />
                 </v-col>
                 
                 
@@ -174,14 +174,17 @@
           label="Search"
           single-line
           hide-details
-        ></v-text-field>
+        />
+       
  <v-data-table
       :headers="headers"
       :items="bookList"
       :search="search"
       :items-per-page="5"
       class="elevation-2"
-    ></v-data-table>
+     />
+
+   
 
 <v-row justify="center">
       <v-dialog
@@ -215,8 +218,8 @@
                     label="Title"
                     required
                     v-model="book.title"
-                    ref="form"
-                  ></v-text-field>
+                    
+                  />
                 </v-col>
 
                 <v-col cols="12">
@@ -224,8 +227,8 @@
                     label="Book Id"
                     required
                     v-model="book.id"
-                    ref="form"
-                  ></v-text-field>
+                    
+                  />
                 </v-col>
 
 
@@ -233,10 +236,10 @@
                   <v-text-field
                     label="Year released"
                     v-model='book.released'
-                    ref='form'
+                    
                     required
                     
-                  ></v-text-field>
+                  />
                 </v-col>
                 
                 <v-col
@@ -249,7 +252,7 @@
                     item-text='fullName'
                     item-value='id'
                     required
-                    v-model='book.author'></v-select>
+                    v-model='book.author' />
                 </v-col>
                 <v-col
                   cols="12"
@@ -261,7 +264,7 @@
                       <option v-for='genre in genres' :value="genre.id">{{genre.name}}</option>
                   </select> -->
 
-        <v-select :items="genres" item-text='name' item-value="id" label="Genre" required  v-model='book.genreId'></v-select>
+        <v-select :items="genres" item-text='name' item-value="id" label="Genre" required  v-model='book.genreId' />
         <!-- <v-select :items="genres" label="Genre" required  v-model='book.genreId'></v-select> -->
                   </v-col>
               </v-row>  
@@ -293,6 +296,7 @@
        search : '',
        dialog: false,
        bookList: [],
+       field: '',
        book: {
            title:'',
            released: '',
@@ -326,6 +330,23 @@
       }},
  methods: {
 
+clearFields(field){
+ 
+ console.log(field)
+
+field.title = ''
+field.id = ''
+field.released = ''
+field.author = ''
+field.genreId = ''
+field.name = ''
+field.fullName = ''
+field.yearBorn = ''
+ 
+ console.log(field)
+ 
+ },
+
    addNewBook() {
      
      let book = {
@@ -337,12 +358,8 @@
       
       this.bookList.push(book);
        
-       console.log(this.bookList)
-       this.book.title = ''
-       this.book.id = ''
-       this.book.released =''
-       this.book.author = ''
-       this.book.genreId = ''
+       this.clearFields(this.book)
+      
        },
       
       addNewGenre() {
@@ -351,8 +368,9 @@
                id: this.genre.id
            }
            this.genres.push(genre)
-           this.genre.name = ''
-           this.genre.id = ''
+          //  this.genre.name = ''
+          //  this.genre.id = ''
+          this.clearFields(this.genre )
        },
 
        addNewAuthor() {
@@ -362,9 +380,11 @@
                id: this.author.id,
                yearBorn: this.author.yearBorn}
            this.authors.push(author)
-            this.author.id = ''
-            this.author.fullName = ''
-            this.author.yearBorn = ''
+            // this.author.id = ''
+            // this.author.fullName = ''
+            // this.author.yearBorn = ''
+
+            this.clearFields(this.author)
 
        },
       
