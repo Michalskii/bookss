@@ -329,6 +329,7 @@
         { text: 'Genre ID', value: 'genreId' },],
       }},
  methods: {
+ 
 
 clearFields(field){
  
@@ -357,7 +358,10 @@ field.yearBorn = ''
          genreId: this.book.genreId }
       
       this.bookList.push(book);
-       
+      
+        const newBooks = JSON.stringify(this.bookList);
+        localStorage.setItem('bookList', newBooks);
+        
        this.clearFields(this.book)
       
        },
@@ -368,8 +372,9 @@ field.yearBorn = ''
                id: this.genre.id
            }
            this.genres.push(genre)
-          //  this.genre.name = ''
-          //  this.genre.id = ''
+          const newGenres = JSON.stringify(this.genres);
+          localStorage.setItem('genres', newGenres);
+
           this.clearFields(this.genre )
        },
 
@@ -380,9 +385,9 @@ field.yearBorn = ''
                id: this.author.id,
                yearBorn: this.author.yearBorn}
            this.authors.push(author)
-            // this.author.id = ''
-            // this.author.fullName = ''
-            // this.author.yearBorn = ''
+            
+            const newAuthors = JSON.stringify(this.authors);
+          localStorage.setItem('authors', newAuthors);
 
             this.clearFields(this.author)
 
@@ -404,16 +409,5 @@ field.yearBorn = ''
    }
 
   },
-  watch: {
-    bookList(newBooks) {
-      localStorage.bookList = JSON.stringify(newBooks);
-    },
-    genres(newGenres) {
-        localStorage.genres = JSON.stringify(newGenres)
-    },
-    authors(newAuthors) {
-        localStorage.authors = JSON.stringify(newAuthors)
-    }
-    
-    },}
+  }
 </script>
