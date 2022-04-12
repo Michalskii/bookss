@@ -19,6 +19,7 @@
         </v-icon>
           </v-btn>
         </template>
+      
         <v-card>
           <v-card-title>
             <span class="text-h5">Add author</span>
@@ -260,12 +261,10 @@
                 >
 
           
-                 <!-- <select v-model='book.genreId'>
-                      <option v-for='genre in genres' :value="genre.id">{{genre.name}}</option>
-                  </select> -->
+                
 
         <v-select :items="genres" item-text='name' item-value="id" label="Genre" required  v-model='book.genreId' />
-        <!-- <v-select :items="genres" label="Genre" required  v-model='book.genreId'></v-select> -->
+       
                   </v-col>
               </v-row>  
             </v-container>
@@ -297,13 +296,6 @@
        dialog: false,
        bookList: [],
        field: '',
-      //  book: {
-      //      title:'',
-      //      released: '',
-      //      id: '',
-      //      author: '',
-      //      genreId:''
-      //  },
       book:{} ,
        genre: {
            id:'',
@@ -354,12 +346,7 @@ field.yearBorn = ''
    addNewBook() {
      
    
-      //  let book = {
-      //      title: this.book.title,
-      //      id: this.book.id,
-      //      released: this.book.released,
-      //      author: this.book.author,
-      //      genreId: this.book.genreId }   
+      
       let book = this.book  
       
       this.bookList.push(this.book);
@@ -367,7 +354,7 @@ field.yearBorn = ''
         const newBooks = JSON.stringify(this.bookList);
         localStorage.setItem('bookList', newBooks);
         
-      //  this.clearFields(this.book)
+      
        
       
        },
@@ -378,8 +365,8 @@ field.yearBorn = ''
                id: this.genre.id
            }
            this.genres.push(genre)
-          const newGenres = JSON.stringify(this.genres);
-          localStorage.setItem('genres', newGenres);
+          // const newGenres = JSON.stringify(this.genres);
+          // localStorage.setItem('genres', newGenres);
 
           this.clearFields(this.genre )
        },
@@ -392,8 +379,8 @@ field.yearBorn = ''
                yearBorn: this.author.yearBorn}
            this.authors.push(author)
             
-            const newAuthors = JSON.stringify(this.authors);
-          localStorage.setItem('authors', newAuthors);
+          //   const newAuthors = JSON.stringify(this.authors);
+          // localStorage.setItem('authors', newAuthors);
 
             this.clearFields(this.author)
 
@@ -406,13 +393,13 @@ field.yearBorn = ''
       this.bookList = JSON.parse(localStorage.bookList)
     }
 
-   if (localStorage.genres) {
-       this.genres = JSON.parse(localStorage.genres)
-   }
+  //  if (localStorage.genres) {
+  //      this.genres = JSON.parse(localStorage.genres)
+  //  }
 
-   if (localStorage.authors) {
-       this.authors = JSON.parse(localStorage.authors)
-   }
+  //  if (localStorage.authors) {
+  //      this.authors = JSON.parse(localStorage.authors)
+  //  }
 
   },
   }

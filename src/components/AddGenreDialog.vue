@@ -96,11 +96,9 @@ export default {
                name: this.genre.name,
                id: this.genre.id
            }
-           console.log(this.genre)
-           this.genres.push(genre)
-           console.log(this.genres)
-          const newGenres = JSON.stringify(this.genres);
-          localStorage.setItem('genres', newGenres);
+                  this.$emit('newGenre', genre)
+
+          
 
           
        },

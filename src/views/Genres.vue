@@ -1,19 +1,15 @@
 <template>
-  <div><AddGenreDialog />
+  <div><AddGenreDialog @newGenre="updateGenre($event)"/>
   
    <v-data-table
       :headers="headers"
-      :items="authorsList"
-      :search="search"
+      :items="genresList"
       :items-per-page="5"
       class="elevation-2"
      /></div>
 </template>
 
-  </div>
-</template>
-
-<script>
+ <script>
   
  import AddGenreDialog from '../components/AddGenreDialog.vue'
                                                                                                            
@@ -21,15 +17,15 @@
     name: 'Genres',
       data() {
       return {
-      authorsList: [],
+      genresList: [],
        headers: [
         {
           text: 'Genre',
           align: 'start',
-          value: 'genre',
+          value: 'name',
         },
        
-        { text: 'Genre ID', value: 'GenreId' },
+        { text: 'Genre ID', value: 'id' },
         ]
       }},
 
@@ -37,6 +33,14 @@
       AddGenreDialog
       
     },
+    methods : {
+      updateGenre(newGenre) {
+      this.genresList.push(newGenre);
+      const newGenres = JSON.stringify(this.genresList);
+      localStorage.setItem('genresList', newGenres);
+
+      }
+    }
 
 
   }

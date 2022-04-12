@@ -6,7 +6,6 @@
   <v-data-table
       :headers="headers"
       :items="authorsList"
-      :search="search"
       :items-per-page="5"
       class="elevation-2"
      /></div>
@@ -43,7 +42,8 @@ import AddAuthorDialog from '../components/AddAuthorDialog.vue'
       updateAuthor(newAuthor) {
       
       this.authorsList.push(newAuthor);
-          const newAuthors = JSON.stringify(this.authorsList);
+         
+         const newAuthors = JSON.stringify(this.authorsList);
           localStorage.setItem('authorsList', newAuthors);
 
       }

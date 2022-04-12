@@ -109,22 +109,10 @@ export default {
                yearBorn: this.author.yearBorn}
        
        this.$emit('newAuthor', author)
-       
-       
-       //        console.log(this.author)
-        //    this.authors.push(author)
-        //    console.log(this.authors)
-            
-        //     const newAuthors = JSON.stringify(this.authors);
-        //   localStorage.setItem('authors', newAuthors);
 
        },
     },
-    mounted() {
-        if (localStorage.authors) {
-       this.authors = JSON.parse(localStorage.authors)
-   }
-    }
+    
 
 }
 </script>
