@@ -83,6 +83,7 @@
 import AddAuthorDialog from '../components/AddAuthorDialog.vue'
 
 export default {
+    
     data() {
         return {
     dialog: false,
@@ -106,14 +107,23 @@ export default {
                fullName: this.author.fullName,
                id: this.author.id,
                yearBorn: this.author.yearBorn}
-               console.log(this.author)
-           this.authors.push(author)
-           console.log(this.authors)
+       
+       this.$emit('newAuthor', author)
+       
+       
+       //        console.log(this.author)
+        //    this.authors.push(author)
+        //    console.log(this.authors)
             
-            const newAuthors = JSON.stringify(this.authors);
-          localStorage.setItem('authors', newAuthors);
+        //     const newAuthors = JSON.stringify(this.authors);
+        //   localStorage.setItem('authors', newAuthors);
 
        },
+    },
+    mounted() {
+        if (localStorage.authors) {
+       this.authors = JSON.parse(localStorage.authors)
+   }
     }
 
 }

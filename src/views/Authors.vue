@@ -1,8 +1,8 @@
 <template>
   <div>
-  <AddAuthorDialog />
+  <AddAuthorDialog @newAuthor="updateAuthor($event)" />
  
- 
+  
   <v-data-table
       :headers="headers"
       :items="authorsList"
@@ -19,14 +19,15 @@ import AddAuthorDialog from '../components/AddAuthorDialog.vue'
     data() {
       return {
       authorsList: [],
+      
        headers: [
         {
           text: 'Name',
           align: 'start',
-          value: 'name',
+          value: 'fullName',
         },
         { text: 'Year born', value: 'yearBorn' },
-        { text: 'Author ID', value: 'authorId' },
+        { text: 'Author ID', value: 'id' },
         ]
       }},
       
@@ -36,5 +37,22 @@ import AddAuthorDialog from '../components/AddAuthorDialog.vue'
       AddAuthorDialog
       
     },
+    
+    
+    methods : {
+      updateAuthor(newAuthor) {
+      
+      this.authorsList.push(newAuthor);
+          const newAuthors = JSON.stringify(this.authorsList);
+          localStorage.setItem('authorsList', newAuthors);
+
+      }
+
+     
+    },
+    mounted() {
+        if (localStorage.authorsList) {
+       this.authorsList = JSON.parse(localStorage.authorsList)
+   }}
   }
 </script>
