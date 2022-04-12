@@ -3,8 +3,8 @@
     
     <nav class="nav">
     <router-link class="navLinks" to="/books">Books <v-icon large>mdi-book-open-page-variant</v-icon></router-link>
-    <router-link class="navLinks" to="/authors">Authors <v-icon large>mdi-book-open-page-variant</v-icon></router-link>
-    <router-link class="navLinks" to="/genres">Genres <v-icon large>mdi-book-open-page-variant</v-icon></router-link>
+    <router-link class="navLinks" to="/authors">Authors <v-icon large>mdi-account-group</v-icon></router-link>
+    <router-link class="navLinks" to="/genres">Genres <v-icon large>mdi-format-list-bulleted</v-icon></router-link>
 
 
     </nav>
