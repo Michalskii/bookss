@@ -158,7 +158,7 @@
             <v-btn
               color="blue darken-1"
               text
-              @click="addGenre = false; addNewGenre()"
+              @click="dupa()"
             >
               Save
             </v-btn>
@@ -297,13 +297,14 @@
        dialog: false,
        bookList: [],
        field: '',
-       book: {
-           title:'',
-           released: '',
-           id: '',
-           author: '',
-           genreId:''
-       },
+      //  book: {
+      //      title:'',
+      //      released: '',
+      //      id: '',
+      //      author: '',
+      //      genreId:''
+      //  },
+      book:{} ,
        genre: {
            id:'',
            name:''
@@ -333,7 +334,7 @@
 
 clearFields(field){
  
- console.log(field)
+ 
 
 field.title = ''
 field.id = ''
@@ -344,25 +345,30 @@ field.name = ''
 field.fullName = ''
 field.yearBorn = ''
  
- console.log(field)
+
  
  },
+ 
+
 
    addNewBook() {
      
-     let book = {
-         title: this.book.title,
-         id: this.book.id,
-         released: this.book.released,
-         author: this.book.author,
-         genreId: this.book.genreId }
+   
+      //  let book = {
+      //      title: this.book.title,
+      //      id: this.book.id,
+      //      released: this.book.released,
+      //      author: this.book.author,
+      //      genreId: this.book.genreId }   
+      let book = this.book  
       
-      this.bookList.push(book);
+      this.bookList.push(this.book);
       
         const newBooks = JSON.stringify(this.bookList);
         localStorage.setItem('bookList', newBooks);
         
-       this.clearFields(this.book)
+      //  this.clearFields(this.book)
+       
       
        },
       
