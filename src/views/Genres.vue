@@ -1,14 +1,16 @@
 <template>
-  <div><h1>Genres</h1></div>
+  <div><AddGenreDialog /></div>
 </template>
 
 <script>
   
-                                                                                                            
+ import AddGenreDialog from '../components/AddGenreDialog.vue'
+                                                                                                           
   export default {
     name: 'Genres',
 
     components: {
+      AddGenreDialog
       
     },
   }
