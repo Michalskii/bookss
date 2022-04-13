@@ -18,8 +18,7 @@ import AddAuthorDialog from '../components/AddAuthorDialog.vue'
     data() {
       return {
       authorsList: [],
-      
-       headers: [
+      headers: [
         {
           text: 'Name',
           align: 'start',
@@ -29,10 +28,7 @@ import AddAuthorDialog from '../components/AddAuthorDialog.vue'
         { text: 'Author ID', value: 'id' },
         ]
       }},
-      
-    
-
-    components: {
+      components: {
       AddAuthorDialog
       
     },

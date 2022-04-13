@@ -1,9 +1,11 @@
    <template>
    <div>
+   
    <v-dialog
         v-model="dialog"
         persistent
         max-width="600px">
+        
         <template v-slot:activator="{ on, attrs }">
           <v-btn
             color="primary"
@@ -103,10 +105,7 @@ export default {
           
           addNewAuthor() {
            
-           let author = {
-               fullName: this.author.fullName,
-               id: this.author.id,
-               yearBorn: this.author.yearBorn}
+           let author = this.author
        
        this.$emit('newAuthor', author)
 
