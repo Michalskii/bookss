@@ -2,7 +2,7 @@
   <div>
     <AddBookDialog @newBook="updateBook($event)" >
           
-          
+
           
           <v-card-title slot="title">
           <span class="text-h5">Add new book</span>
@@ -39,7 +39,7 @@ export default {
     return {
       search: "",
       BookList: [],
-      field: "",
+      
       book: {},
       headers: [
         {

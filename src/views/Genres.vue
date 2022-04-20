@@ -1,6 +1,11 @@
 <template>
   <div>
-    <AddGenreDialog @newGenre="updateGenre($event)" />
+    <AddGenreDialog @newGenre="updateGenre($event)" >
+
+ <v-card-title slot="title">
+        <span class="text-h5">Add new genre</span>
+      </v-card-title>
+    </AddGenreDialog>
 
     <v-data-table
       :headers="headers"
@@ -40,6 +45,11 @@ export default {
       const newGenres = JSON.stringify(this.genresList);
       localStorage.setItem("genresList", newGenres);
     },
+
+     clearInput() {
+          console.log('fs')
+          this.genre = ''
+       }
   },
 };
 </script>

@@ -74,7 +74,7 @@
             <v-btn
               color="blue darken-1"
               text
-              @click="dialog = false; addNewAuthor()">
+              @click="dialog = false; addNewAuthor(); clearInput()">
               Save
             </v-btn>
           </v-card-actions>
@@ -107,10 +107,15 @@ export default {
           addNewAuthor() {
            
            let author = this.author 
-       
-       this.$emit('newAuthor', author)
+           this.$emit('newAuthor', author)
 
        },
+       clearInput() {
+          console.log('fs')
+          this.author = ''
+       }
+
+
     },
     
 

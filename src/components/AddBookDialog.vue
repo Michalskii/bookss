@@ -8,9 +8,7 @@
       >
 
       <v-card>
-        <!-- <v-card-title>
-          <span class="text-h5">Add new book</span>
-        </v-card-title> -->
+      
 <slot name="title"></slot>
 
         <v-card-text>
@@ -66,6 +64,7 @@
             @click="
               dialog = false;
               addNewBook();
+              clearInput()
             "
             >Save</v-btn
           >
@@ -97,6 +96,11 @@ export default {
 
       this.$emit("newBook", book);
     },
+ clearInput() {
+          console.log('fs')
+          this.book = ''
+       }
+
   },
 };
 </script>

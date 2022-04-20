@@ -8,9 +8,7 @@
 
     <v-card>
       <slot name="title"></slot>
-      <!-- <v-card-title>
-        <span class="text-h5">Add new genre</span>
-      </v-card-title> -->
+     
       
       <v-card-text>
         <v-container>
@@ -37,6 +35,7 @@
           @click="
             dialog = false;
             addNewGenre();
+            clearInput()
           "
         >
           Save
@@ -70,6 +69,11 @@ export default {
       };
       this.$emit("newGenre", genre);
     },
+
+     clearInput() {
+          
+          this.genre = ''
+       }
   },
   mounted() {
     if (localStorage.genres) {
