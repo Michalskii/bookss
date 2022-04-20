@@ -1,6 +1,16 @@
 <template>
   <div>
-    <AddBookDialog @newBook="updateBook($event)" />
+    <AddBookDialog @newBook="updateBook($event)" >
+          
+          
+          
+          <v-card-title slot="title">
+          <span class="text-h5">Add new book</span>
+        </v-card-title>
+    </AddBookDialog>
+    
+    
+    
     <v-text-field
       v-model="search"
       append-icon="mdi-magnify"

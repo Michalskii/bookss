@@ -1,5 +1,5 @@
 <template>
-  <div>
+  
     <v-dialog v-model="dialog" persistent max-width="600px">
       <template v-slot:activator="{ on, attrs }">
         <v-btn color="primary" dark v-bind="attrs" v-on="on">
@@ -8,9 +8,11 @@
       >
 
       <v-card>
-        <v-card-title>
+        <!-- <v-card-title>
           <span class="text-h5">Add new book</span>
-        </v-card-title>
+        </v-card-title> -->
+<slot name="title"></slot>
+
         <v-card-text>
           <v-container>
             <v-row>
@@ -70,7 +72,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-  </div>
+  
 </template>
 
 <script>

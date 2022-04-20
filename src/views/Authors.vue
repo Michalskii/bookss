@@ -1,6 +1,12 @@
 <template>
   <div>
-    <AddAuthorDialog @newAuthor="updateAuthor($event)" />
+    <AddAuthorDialog @newAuthor="updateAuthor($event)" >
+            
+      
+            <v-card-title slot="title">
+            <span class="text-h5">Add author</span>
+          </v-card-title>
+    </AddAuthorDialog>
 
     <v-data-table
       :headers="headers"
