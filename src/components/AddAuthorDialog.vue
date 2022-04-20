@@ -1,6 +1,5 @@
    <template>
    
-   
    <v-dialog
         v-model="dialog"
         persistent
@@ -18,9 +17,7 @@
         
         
      <v-card>
-          <!-- <v-card-title>
-            <span class="text-h5">Add author</span>
-          </v-card-title> -->
+         
           <slot name="title"></slot>
           <v-card-text>
             <v-container>
@@ -83,7 +80,7 @@
    
 </template>
 <script>
-import AddAuthorDialog from '../components/AddAuthorDialog.vue'
+// import AddAuthorDialog from '../components/AddAuthorDialog.vue'
 
 export default {
     
@@ -98,9 +95,9 @@ export default {
        },
         }
     },
-    components: {
-        'AddAuthorDialog' : AddAuthorDialog
-    },
+    // components: {
+    //     'AddAuthorDialog' : AddAuthorDialog
+    // },
     methods: {
           
           
@@ -111,7 +108,7 @@ export default {
 
        },
        clearInput() {
-          console.log('fs')
+          
           this.author = ''
        }
 

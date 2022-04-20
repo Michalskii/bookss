@@ -75,7 +75,7 @@
 </template>
 
 <script>
-import AddBookDialog from "../components/AddBookDialog.vue";
+// import AddBookDialog from "../components/AddBookDialog.vue";
 
 export default {
   data() {
@@ -87,9 +87,9 @@ export default {
       genres: [],
     };
   },
-  components: {
-    AddBookDialog: AddBookDialog,
-  },
+//   components: {
+//     AddBookDialog: AddBookDialog,
+//   },
   methods: {
     addNewBook() {
       let book = this.book;
@@ -97,7 +97,7 @@ export default {
       this.$emit("newBook", book);
     },
  clearInput() {
-          console.log('fs')
+          
           this.book = ''
        }
 
