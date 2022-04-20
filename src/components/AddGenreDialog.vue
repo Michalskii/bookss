@@ -1,5 +1,7 @@
 <template>
-  <v-dialog v-model="dialog" persistent max-width="600px">
+
+<v-dialog v-model="dialog" persistent max-width="600px">
+    
     <template v-slot:activator="{ on, attrs }">
       <v-btn color="primary" dark v-bind="attrs" v-on="on">
         Add new genre
@@ -7,6 +9,7 @@
     </template>
 
     <v-card>
+     
       <slot name="title"></slot>
      
       
@@ -35,7 +38,7 @@
           @click="
             dialog = false;
             addNewGenre();
-            clearInput()
+            
           "
         >
           Save
@@ -68,6 +71,7 @@ export default {
         id: this.genre.id,
       };
       this.$emit("newGenre", genre);
+    this.clearInput()
     },
 
      clearInput() {

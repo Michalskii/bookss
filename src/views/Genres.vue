@@ -2,6 +2,9 @@
   <div>
     <AddGenreDialog @newGenre="updateGenre($event)" >
 
+
+
+
  <v-card-title slot="title">
         <span class="text-h5">Add new genre</span>
       </v-card-title>
@@ -46,10 +49,7 @@ export default {
       localStorage.setItem("genresList", newGenres);
     },
 
-     clearInput() {
-          console.log('fs')
-          this.genre = ''
-       }
+    
   },
 };
 </script>
