@@ -14,20 +14,8 @@
           </v-btn>
         </template>
         
-        
-     <v-card>
-         
-          <slot name="title"></slot>
-          <v-card-text>
-            <v-container>
-              
-            </v-container>
-           
-          </v-card-text>
-         
-         
-        
-        </v-card>
+        <slot name ="card"></slot>
+    
       </v-dialog>
    
 </template>
@@ -35,9 +23,12 @@
 
 export default {
     
+data() {
+        return {
+    dialog: false, 
+        }
+}}
 
-    
-}
 </script>
 
 <style>
