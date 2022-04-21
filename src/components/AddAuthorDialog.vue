@@ -1,5 +1,5 @@
 <template>
-<DialogWrapper>
+<DialogWrapper title="Add new author">
    
    <v-card slot="card">
           <v-card-text>
@@ -48,13 +48,13 @@
             <v-btn
               color="blue darken-1"
               text
-              @click="dialog = false">
+              >
               Close
             </v-btn>
             <v-btn
               color="blue darken-1"
               text
-              @click="dialog = false; addNewAuthor(); clearInput()">
+              @click=" addNewAuthor(); clearInput()">
               Save
             </v-btn>
           </v-card-actions>

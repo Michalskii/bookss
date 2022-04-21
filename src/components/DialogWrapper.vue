@@ -13,6 +13,10 @@
           </v-btn>
         </template>
         
+         <v-card-title>
+          <span class="text-h5">{{ title }}</span>
+        </v-card-title>
+        
         <slot name ="card"></slot>
     
       </v-dialog>
@@ -24,9 +28,15 @@ export default {
     
 data() {
         return {
-    dialog: false, 
+    
         }
-}}
+},
+props:  {
+  title : String,
+  dialog : Boolean,
+}
+
+}
 
 </script>
 
