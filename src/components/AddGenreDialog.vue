@@ -48,7 +48,7 @@
   </v-dialog>
 </template>
 <script>
-import AddGenreDialog from "../components/AddGenreDialog.vue";
+// import AddGenreDialog from "../components/AddGenreDialog.vue";
 
 export default {
   data() {
@@ -61,9 +61,9 @@ export default {
       genres: [],
     };
   },
-  components: {
-    AddGenreDialog: AddGenreDialog,
-  },
+//   components: {
+//     AddGenreDialog: AddGenreDialog,
+//   },
   methods: {
     addNewGenre() {
       let genre = {
