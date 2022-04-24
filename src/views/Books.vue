@@ -1,16 +1,16 @@
 <template>
   <div>
-    <AddBookDialog @newBook="updateBook($event)" >
-          
+    <dialog-wrapper
+      v-if="dialog === true"
+      :active="dialog"
+      @close="closeDialog"
+      title="Add new book"
+    >
+      <add-book-dialog @close="closeDialog" @newBook="updateBook($event)" />
+    </dialog-wrapper>
 
-          
-          <v-card-title slot="title">
-          <span class="text-h5">Add new book</span>
-        </v-card-title>
-    </AddBookDialog>
-    
-    
-    
+    <v-btn color="primary" dark @click="openDialog"> Add new book </v-btn>
+
     <v-text-field
       v-model="search"
       append-icon="mdi-magnify"
@@ -30,17 +30,19 @@
 </template>
 <script>
 import AddBookDialog from "../components/AddBookDialog.vue";
+import DialogWrapper from "../components/DialogWrapper.vue";
 
 export default {
   name: "Books",
   components: {
     AddBookDialog,
+    DialogWrapper,
   },
   data() {
     return {
       search: "",
       BookList: [],
-      
+      dialog: false,
       book: {},
       headers: [
         {
@@ -61,6 +63,12 @@ export default {
 
       const newBooks = JSON.stringify(this.BookList);
       localStorage.setItem("BookList", newBooks);
+    },
+    closeDialog() {
+      this.dialog = false;
+    },
+    openDialog() {
+      this.dialog = true;
     },
   },
   mounted() {

@@ -1,10 +1,18 @@
 <template>
   <div>
-    <AddAuthorDialog @newAuthor="updateAuthor($event)" >
-            
-      
-          
-    </AddAuthorDialog>
+    <dialog-wrapper
+      v-if="dialog === true"
+      :active="dialog"
+      @close="closeDialog"
+      title="Add new author"
+    >
+      <add-author-dialog
+        @close="closeDialog"
+        @pushAuthor="updateAuthor($event)"
+      />
+    </dialog-wrapper>
+
+    <v-btn color="primary" dark @click="openDialog"> Add new author </v-btn>
 
     <v-data-table
       :headers="headers"
@@ -15,16 +23,20 @@
   </div>
 </template>
 
-
-
-
 <script>
-import AddAuthorDialog from "../components/AddAuthorDialog.vue";
+import DialogWrapper from "@/components/DialogWrapper";
+import AddAuthorDialog from "@/components/AddAuthorDialog";
+
 export default {
-  name: "Authors",
+  components: {
+    DialogWrapper,
+    AddAuthorDialog,
+  },
+  name: "AuthorsTest",
   data() {
     return {
       authorsList: [],
+      dialog: false,
       headers: [
         {
           text: "Name",
@@ -36,16 +48,22 @@ export default {
       ],
     };
   },
-  components: {
-    AddAuthorDialog,
-  },
 
   methods: {
-    updateAuthor(newAuthor) {
-      this.authorsList.push(newAuthor);
-
+    dupa() {
+      console.log(this.authorsList);
+    },
+    closeDialog() {
+      this.dialog = false;
+    },
+    openDialog() {
+      this.dialog = true;
+    },
+    updateAuthor(author) {
+      this.authorsList.push(author);
       const newAuthors = JSON.stringify(this.authorsList);
       localStorage.setItem("authorsList", newAuthors);
+      this.closeDialog();
     },
   },
   mounted() {

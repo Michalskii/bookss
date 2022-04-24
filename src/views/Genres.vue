@@ -1,14 +1,15 @@
 <template>
   <div>
-    <AddGenreDialog @newGenre="updateGenre($event)" >
+    <dialog-wrapper
+      v-if="dialog === true"
+      :active="dialog"
+      @close="closeDialog"
+      title="Add new genre"
+    >
+      <add-genre-dialog @close="closeDialog" @newGenre="updateGenre($event)" />
+    </dialog-wrapper>
 
-
-
-
- <v-card-title slot="title">
-        <span class="text-h5">Add new genre</span>
-      </v-card-title>
-    </AddGenreDialog>
+    <v-btn color="primary" dark @click="openDialog"> Add new genre </v-btn>
 
     <v-data-table
       :headers="headers"
@@ -17,16 +18,18 @@
       class="elevation-2"
     />
   </div>
-</template>
+</template> 
 
 <script>
 import AddGenreDialog from "../components/AddGenreDialog.vue";
+import DialogWrapper from "../components/DialogWrapper.vue";
 
 export default {
   name: "Genres",
   data() {
     return {
       genresList: [],
+      dialog: false,
       headers: [
         {
           text: "Genre",
@@ -41,15 +44,21 @@ export default {
 
   components: {
     AddGenreDialog,
+    DialogWrapper,
   },
   methods: {
     updateGenre(newGenre) {
       this.genresList.push(newGenre);
       const newGenres = JSON.stringify(this.genresList);
       localStorage.setItem("genresList", newGenres);
+      this.closeDialog();
     },
-
-    
+    closeDialog() {
+      this.dialog = false;
+    },
+    openDialog() {
+      this.dialog = true;
+    },
   },
 };
 </script>

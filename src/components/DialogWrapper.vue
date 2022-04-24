@@ -1,45 +1,36 @@
-   <template>
-   <v-dialog
-        v-model="dialog"
-        persistent
-        max-width="600px">
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn
-            color="primary"
-            dark
-            v-bind="attrs"
-            v-on="on">
-            Add new author
-          </v-btn>
-        </template>
-        
-         <v-card-title>
-          <span class="text-h5">{{ title }}</span>
-        </v-card-title>
-        
-        <slot name ="card"></slot>
-    
-      </v-dialog>
-   
+  <template>
+  <v-dialog
+    :value="active"
+    max-width="600px"
+    persistent
+    @click:outside="closeDialog"
+  >
+    <v-card>
+      <v-card-title>
+        <span class="text-h5">{{ title }}</span>
+      </v-card-title>
+      <slot></slot
+    ></v-card>
+  </v-dialog>
 </template>
 <script>
-
 export default {
-    
-data() {
-        return {
-    
-        }
-},
-props:  {
-  title : String,
-  dialog : Boolean,
-}
-
-}
-
+  props: {
+    active: {
+      required: true,
+      type: Boolean,
+    },
+    title: {
+      required: true,
+      type: String,
+    },
+  },
+  methods: {
+    closeDialog() {
+      this.$emit("close");
+    },
+  },
+};
 </script>
 
-<style>
-
-</style>
+<style></style>
