@@ -49,6 +49,7 @@ export default {
         name: this.genre.name,
         id: this.genre.id,
       };
+
       this.$emit("newGenre", genre);
       this.clearInput();
     },

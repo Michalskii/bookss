@@ -63,15 +63,10 @@ export default {
   data() {
     return {
       dialog: false,
-
       book: {},
-      authors: [],
-      genres: [],
     };
   },
-  //   components: {
-  //     AddBookDialog: AddBookDialog,
-  //   },
+
   methods: {
     addNewBook() {
       let book = this.book;
@@ -79,12 +74,23 @@ export default {
       this.$emit("newBook", book);
       this.clearInput();
       this.closeDialog();
+      console.log(this.genres);
+      console.log(this.authors);
     },
     clearInput() {
       this.book = "";
     },
     closeDialog() {
       this.$emit("close");
+    },
+  },
+
+  computed: {
+    genres() {
+      return this.$store.state.genres;
+    },
+    authors() {
+      return this.$store.state.authors;
     },
   },
 };

@@ -10,7 +10,6 @@
     </dialog-wrapper>
 
     <v-btn color="primary" dark @click="openDialog"> Add new genre </v-btn>
-
     <v-data-table
       :headers="headers"
       :items="genresList"
@@ -53,6 +52,7 @@ export default {
       localStorage.setItem("genresList", newGenres);
       this.closeDialog();
     },
+
     closeDialog() {
       this.dialog = false;
     },
