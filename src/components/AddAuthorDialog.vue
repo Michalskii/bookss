@@ -33,10 +33,10 @@
   </div>
 </template>
 <script>
+import { mapActions } from "vuex";
 export default {
   data() {
     return {
-      authors: [],
       author: {
         id: "",
         yearBorn: "",
@@ -45,9 +45,13 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["addAuthor"]),
+
     addNewAuthor() {
       let author = this.author;
-      this.$emit("pushAuthor", author);
+      this.addAuthor(author);
+      this.author = "";
+      this.closeDialog();
     },
     closeDialog() {
       this.$emit("close");

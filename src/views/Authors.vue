@@ -16,7 +16,7 @@
 
     <v-data-table
       :headers="headers"
-      :items="authorsList"
+      :items="authors"
       :items-per-page="5"
       class="elevation-2"
     />
@@ -35,7 +35,6 @@ export default {
   name: "AuthorsTest",
   data() {
     return {
-      authorsList: [],
       dialog: false,
       headers: [
         {
@@ -48,28 +47,18 @@ export default {
       ],
     };
   },
-
-  methods: {
-    dupa() {
-      console.log(this.authorsList);
+  computed: {
+    authors() {
+      return this.$store.state.authors;
     },
+  },
+  methods: {
     closeDialog() {
       this.dialog = false;
     },
     openDialog() {
       this.dialog = true;
     },
-    updateAuthor(author) {
-      this.authorsList.push(author);
-      const newAuthors = JSON.stringify(this.authorsList);
-      localStorage.setItem("authorsList", newAuthors);
-      this.closeDialog();
-    },
-  },
-  mounted() {
-    if (localStorage.authorsList) {
-      this.authorsList = JSON.parse(localStorage.authorsList);
-    }
   },
 };
 </script>

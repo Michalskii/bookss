@@ -4,24 +4,44 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
-state:{
-    fruits: [
-        {name: 'banana', price : 20},
-        {name :'arbuz' , price: 10}
-    ],
+
+  
+  
+
+    state:{
+  
     genres: [],
     authors: [],
-    genre: {}
+    genre: {},
+    
+},
+
+actions: {
+    addAuthor({commit}, author) {
+
+        commit('pushAuthor', author)
+    },
+},
+mutations: {
+    pushAuthor(state, author) {
+        state.authors.push(author)
+        console.log(state.authors)
+        
+    },
+
+    initialiseStore(state) {
+        // Check if the ID exists
+        if(localStorage.getItem('store')) {
+            // Replace the state object with the stored item
+            this.replaceState(
+                Object.assign(state, JSON.parse(localStorage.getItem('store')))
+            );
+        }
+    }
 },
 
 
-mutations: {
-
-    updateGenres: state => {
-        let genre = 'dsa'
-        console.log(genre)
-    }
-}
-
-
 })
+store.subscribe((mutation, state) => {
+    localStorage.setItem('store', JSON.stringify(state));
+});
