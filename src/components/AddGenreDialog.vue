@@ -16,21 +16,14 @@
 
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn color="blue darken-1" text @click="closeDialog()"> Close </v-btn>
-      <v-btn
-        color="blue darken-1"
-        text
-        @click="
-          dialog = false;
-          addNewGenre();
-        "
-      >
-        Save
-      </v-btn>
+      <v-btn color="blue darken-1" text @click="closeDialog"> Close </v-btn>
+      <v-btn color="blue darken-1" text @click="addNewGenre"> Save </v-btn>
     </v-card-actions>
   </div>
 </template>
 <script>
+import { mapActions } from "vuex";
+
 export default {
   data() {
     return {
@@ -39,19 +32,18 @@ export default {
         id: "",
         name: "",
       },
-      genres: [],
     };
   },
 
   methods: {
-    addNewGenre() {
-      let genre = {
-        name: this.genre.name,
-        id: this.genre.id,
-      };
+    ...mapActions(["addGenre"]),
 
-      this.$emit("newGenre", genre);
+    addNewGenre() {
+      let genre = this.genre;
+      this.addGenre(genre);
+
       this.clearInput();
+      this.closeDialog();
     },
 
     clearInput() {
@@ -60,11 +52,6 @@ export default {
     closeDialog() {
       this.$emit("close");
     },
-  },
-  mounted() {
-    if (localStorage.genres) {
-      this.genres = JSON.parse(localStorage.genres);
-    }
   },
 };
 </script>

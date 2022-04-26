@@ -45,20 +45,14 @@
     <v-card-actions>
       <v-spacer></v-spacer>
       <v-btn color="blue darken-1" text @click="closeDialog()">Close</v-btn>
-      <v-btn
-        color="blue darken-1"
-        text
-        @click="
-          addNewBook();
-          clearInput();
-        "
-        >Save</v-btn
-      >
+      <v-btn color="blue darken-1" text @click="addNewBook()">Save</v-btn>
     </v-card-actions>
   </div>
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   data() {
     return {
@@ -68,14 +62,14 @@ export default {
   },
 
   methods: {
+    ...mapActions(["addBook"]),
+
     addNewBook() {
       let book = this.book;
 
-      this.$emit("newBook", book);
+      this.addBook(book);
       this.clearInput();
       this.closeDialog();
-      console.log(this.genres);
-      console.log(this.authors);
     },
     clearInput() {
       this.book = "";
@@ -87,10 +81,10 @@ export default {
 
   computed: {
     genres() {
-      return this.$store.state.genres;
+      return this.$store.state.genresStore.genres;
     },
     authors() {
-      return this.$store.state.authors;
+      return this.$store.state.authorsStore.authors;
     },
   },
 };

@@ -6,10 +6,7 @@
       @close="closeDialog"
       title="Add new author"
     >
-      <add-author-dialog
-        @close="closeDialog"
-        @pushAuthor="updateAuthor($event)"
-      />
+      <add-author-dialog @close="closeDialog" />
     </dialog-wrapper>
 
     <v-btn color="primary" dark @click="openDialog"> Add new author </v-btn>
@@ -32,7 +29,7 @@ export default {
     DialogWrapper,
     AddAuthorDialog,
   },
-  name: "AuthorsTest",
+
   data() {
     return {
       dialog: false,
@@ -49,7 +46,7 @@ export default {
   },
   computed: {
     authors() {
-      return this.$store.state.authors;
+      return this.$store.state.authorsStore.authors;
     },
   },
   methods: {

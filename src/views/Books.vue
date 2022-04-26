@@ -6,7 +6,7 @@
       @close="closeDialog"
       title="Add new book"
     >
-      <add-book-dialog @close="closeDialog" @newBook="updateBook($event)" />
+      <add-book-dialog @close="closeDialog" />
     </dialog-wrapper>
 
     <v-btn color="primary" dark @click="openDialog"> Add new book </v-btn>
@@ -21,7 +21,7 @@
 
     <v-data-table
       :headers="headers"
-      :items="BookList"
+      :items="books"
       :search="search"
       :items-per-page="5"
       class="elevation-2"
@@ -41,9 +41,9 @@ export default {
   data() {
     return {
       search: "",
-      BookList: [],
+      // BookList: [],
       dialog: false,
-      book: {},
+
       headers: [
         {
           text: "Title",
@@ -58,12 +58,6 @@ export default {
     };
   },
   methods: {
-    updateBook(newBook) {
-      this.BookList.push(newBook);
-
-      const newBooks = JSON.stringify(this.BookList);
-      localStorage.setItem("BookList", newBooks);
-    },
     closeDialog() {
       this.dialog = false;
     },
@@ -71,10 +65,11 @@ export default {
       this.dialog = true;
     },
   },
-  mounted() {
-    if (localStorage.BookList) {
-      this.BookList = JSON.parse(localStorage.BookList);
-    }
+
+  computed: {
+    books() {
+      return this.$store.state.booksStore.books;
+    },
   },
 };
 </script>

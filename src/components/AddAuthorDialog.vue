@@ -18,9 +18,9 @@
             />
           </v-col>
 
-          <v-col cols="12" md="4" sm="6">
+          <!-- <v-col cols="12" md="4" sm="6">
             <v-text-field v-model="author.id" label="ID" required />
-          </v-col>
+          </v-col> -->
         </v-row>
       </v-container>
     </v-card-text>
@@ -48,9 +48,12 @@ export default {
     ...mapActions(["addAuthor"]),
 
     addNewAuthor() {
-      let author = this.author;
+      let author = {
+        yearBorn: this.author.yearBorn,
+        fullName: this.author.fullName,
+      };
+
       this.addAuthor(author);
-      this.author = "";
       this.closeDialog();
     },
     closeDialog() {

@@ -12,7 +12,7 @@
     <v-btn color="primary" dark @click="openDialog"> Add new genre </v-btn>
     <v-data-table
       :headers="headers"
-      :items="genresList"
+      :items="genres"
       :items-per-page="5"
       class="elevation-2"
     />
@@ -27,7 +27,6 @@ export default {
   name: "Genres",
   data() {
     return {
-      genresList: [],
       dialog: false,
       headers: [
         {
@@ -46,18 +45,16 @@ export default {
     DialogWrapper,
   },
   methods: {
-    updateGenre(newGenre) {
-      this.genresList.push(newGenre);
-      const newGenres = JSON.stringify(this.genresList);
-      localStorage.setItem("genresList", newGenres);
-      this.closeDialog();
-    },
-
     closeDialog() {
       this.dialog = false;
     },
     openDialog() {
       this.dialog = true;
+    },
+  },
+  computed: {
+    genres() {
+      return this.$store.state.genresStore.genres;
     },
   },
 };
