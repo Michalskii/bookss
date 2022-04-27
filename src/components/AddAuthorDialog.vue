@@ -27,8 +27,9 @@
 
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn color="blue darken-1" text @click="closeDialog"> Close </v-btn>
+      <v-btn color="blue darken-1" text @click="closeDialog;"> Close </v-btn>
       <v-btn color="blue darken-1" text @click="addNewAuthor"> Save</v-btn>
+      <v-btn @click="getIds">das</v-btn>
     </v-card-actions>
   </div>
 </template>
@@ -44,20 +45,42 @@ export default {
       },
     };
   },
+  computed: {
+    authors() {
+      return this.$store.state.authorsStore.authors;
+    },
+  },
   methods: {
     ...mapActions(["addAuthor"]),
 
     addNewAuthor() {
-      let author = {
-        yearBorn: this.author.yearBorn,
-        fullName: this.author.fullName,
-      };
-
+      this.author.id = this.authors.length;
+      let author = this.author;
       this.addAuthor(author);
       this.closeDialog();
     },
     closeDialog() {
       this.$emit("close");
+    },
+
+    jajko(author) {
+      this.$store.state.authorsStore.authors.splice(
+        this.authors.indexOf(author),
+        1
+      );
+    },
+
+    getIds() {
+      const ids = this.$store.state.authorsStore.authors.map((author) => {
+        return author.id;
+      });
+
+      this.getLastId(ids);
+    },
+
+    getLastId(ii) {
+      const max = Math.max.apply(null, ii);
+      console.log(max);
     },
   },
 };

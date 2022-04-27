@@ -20,11 +20,7 @@ export default
         },
     
     } ,
-    getters: {
- dupa () {
-     return state.author
- }
-    }
+    
 
 }
 
