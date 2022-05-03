@@ -16,7 +16,7 @@ export default
         },
 
         updateList({commit}, dupa) {
-            commit('update', dupa)
+            commit('updateBookList', dupa)
         }
     },
 
@@ -31,7 +31,7 @@ export default
             state.books = filtered
             
         },
-        update(state, dupa) {
+        updateBookList(state, dupa) {
             state.books = dupa
         }
     }
