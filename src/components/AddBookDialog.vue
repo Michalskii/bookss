@@ -7,9 +7,9 @@
             <v-text-field label="Title" required v-model="book.title" />
           </v-col>
 
-          <v-col cols="12">
+          <!-- <v-col cols="12">
             <v-text-field label="Book Id" required v-model="book.id" />
-          </v-col>
+          </v-col> -->
 
           <v-col cols="12">
             <v-text-field
@@ -65,6 +65,8 @@ export default {
     ...mapActions(["addBook"]),
 
     addNewBook() {
+      this.book.id = this.getIds + 1;
+
       let book = this.book;
 
       this.addBook(book);
@@ -85,6 +87,16 @@ export default {
     },
     authors() {
       return this.$store.state.authorsStore.authors;
+    },
+
+    getIds() {
+      const ids = this.$store.state.booksStore.books.map((book) => {
+        return book.id;
+      });
+
+      const lastId = Math.max(0, ...ids);
+      console.log(lastId);
+      return lastId;
     },
   },
 };

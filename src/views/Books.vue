@@ -25,12 +25,17 @@
       :search="search"
       :items-per-page="5"
       class="elevation-2"
-    />
+    >
+      <template v-slot:[`item.actions`]="{ item }">
+        <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
+      </template>
+    </v-data-table>
   </div>
 </template>
 <script>
 import AddBookDialog from "../components/AddBookDialog.vue";
 import DialogWrapper from "../components/DialogWrapper.vue";
+import { mapActions } from "vuex";
 
 export default {
   name: "Books",
@@ -54,6 +59,7 @@ export default {
         { text: "Released", value: "released" },
         { text: "Author ID", value: "author" },
         { text: "Genre ID", value: "genreId" },
+        { text: "Delete", value: "actions" },
       ],
     };
   },
@@ -63,6 +69,11 @@ export default {
     },
     openDialog() {
       this.dialog = true;
+    },
+    ...mapActions(["deleteBook"]),
+
+    deleteItem(item) {
+      this.deleteBook(item.id);
     },
   },
 
