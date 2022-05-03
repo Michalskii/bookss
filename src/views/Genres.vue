@@ -15,13 +15,18 @@
       :items="genres"
       :items-per-page="5"
       class="elevation-2"
-    />
+    >
+      <template v-slot:[`item.actions`]="{ item }">
+        <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
+      </template>
+    </v-data-table>
   </div>
 </template> 
 
 <script>
 import AddGenreDialog from "../components/AddGenreDialog.vue";
 import DialogWrapper from "../components/DialogWrapper.vue";
+import { mapActions } from "vuex";
 
 export default {
   name: "Genres",
@@ -36,6 +41,7 @@ export default {
         },
 
         { text: "Genre ID", value: "id" },
+        { text: "Delete item", value: "actions" },
       ],
     };
   },
@@ -45,11 +51,16 @@ export default {
     DialogWrapper,
   },
   methods: {
+    ...mapActions(["deleteGenre"]),
+
     closeDialog() {
       this.dialog = false;
     },
     openDialog() {
       this.dialog = true;
+    },
+    deleteItem(item) {
+      this.deleteGenre(item.id);
     },
   },
   computed: {

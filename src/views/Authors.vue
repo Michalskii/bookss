@@ -16,14 +16,18 @@
       :items="authors"
       :items-per-page="5"
       class="elevation-2"
-    />
+    >
+      <template v-slot:[`item.actions`]="{ item }">
+        <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
+      </template>
+    </v-data-table>
   </div>
 </template>
 
 <script>
 import DialogWrapper from "@/components/DialogWrapper";
 import AddAuthorDialog from "@/components/AddAuthorDialog";
-
+import { mapActions } from "vuex";
 export default {
   components: {
     DialogWrapper,
@@ -41,6 +45,7 @@ export default {
         },
         { text: "Year born", value: "yearBorn" },
         { text: "Author ID", value: "id" },
+        { text: "Delete item", value: "actions" },
       ],
     };
   },
@@ -50,11 +55,16 @@ export default {
     },
   },
   methods: {
+    ...mapActions(["deleteAuthor"]),
     closeDialog() {
       this.dialog = false;
     },
     openDialog() {
       this.dialog = true;
+    },
+
+    deleteItem(item) {
+      this.deleteAuthor(item.id);
     },
   },
 };

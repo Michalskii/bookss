@@ -3,7 +3,7 @@ export default
  {
     state: () => ({
     authors: [],
-    id: 0,
+    
    
         
     }),
@@ -11,13 +11,20 @@ export default
         addAuthor({commit}, author) {
         commit('pushAuthor', author)
         },
+        deleteAuthor({commit}, deletedAuthor) {
+            commit('delete', deletedAuthor)
+        }
     },
 
     mutations: {
         pushAuthor(state, author) {
             state.authors.push(author)
-            
         },
+
+        delete(state, deletedAuthor) {
+            const filtered = state.authors.filter(author=> author.id !== deletedAuthor)
+            state.authors = filtered
+        }
     
     } ,
     

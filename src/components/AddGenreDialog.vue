@@ -6,10 +6,6 @@
           <v-col cols="12" sm="6" md="4">
             <v-text-field label="Genre name" required v-model="genre.name" />
           </v-col>
-
-          <v-col cols="12" sm="6" md="4">
-            <v-text-field label="ID" required v-model="genre.id" />
-          </v-col>
         </v-row>
       </v-container>
     </v-card-text>
@@ -34,11 +30,28 @@ export default {
       },
     };
   },
+  computed: {
+    genres() {
+      return this.$store.state.genresStore.genres;
+    },
+
+    getIds() {
+      const ids = this.$store.state.genresStore.genres.map((genre) => {
+        return genre.id;
+      });
+
+      const lastId = Math.max(0, ...ids);
+      console.log(lastId);
+      return lastId;
+    },
+  },
 
   methods: {
     ...mapActions(["addGenre"]),
 
     addNewGenre() {
+      this.genre.id = this.getIds + 1;
+
       let genre = this.genre;
       this.addGenre(genre);
 
