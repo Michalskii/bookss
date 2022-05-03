@@ -64,6 +64,16 @@ export default {
     },
 
     deleteItem(item) {
+      console.log(item.id);
+
+      const dupa = this.$store.state.booksStore.books;
+
+      const filtered = dupa.filter((book) => book.author == item.id);
+
+      console.log(dupa);
+
+      console.log(filtered);
+
       this.deleteAuthor(item.id);
     },
   },

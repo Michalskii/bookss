@@ -13,7 +13,8 @@ export default
         },
         deleteAuthor({commit}, deletedAuthor) {
             commit('delete', deletedAuthor)
-        }
+        },
+        
     },
 
     mutations: {
@@ -24,7 +25,8 @@ export default
         delete(state, deletedAuthor) {
             const filtered = state.authors.filter(author=> author.id !== deletedAuthor)
             state.authors = filtered
-        }
+        },
+       
     
     } ,
     

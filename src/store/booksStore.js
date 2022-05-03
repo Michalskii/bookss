@@ -10,6 +10,7 @@ export default
         addBook({commit}, book) {
         commit('pushBook', book)
         },
+        
         deleteBook({commit}, deletedBook) {
             commit('delete', deletedBook)
         }
@@ -24,6 +25,7 @@ export default
         delete(state, deletedBook) {
             const filtered = state.books.filter(book=> book.id !== deletedBook)
             state.books = filtered
+            
         }
     }
 
