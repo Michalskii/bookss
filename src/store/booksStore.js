@@ -13,6 +13,10 @@ export default
         
         deleteBook({commit}, deletedBook) {
             commit('delete', deletedBook)
+        },
+
+        updateList({commit}, dupa) {
+            commit('update', dupa)
         }
     },
 
@@ -26,6 +30,9 @@ export default
             const filtered = state.books.filter(book=> book.id !== deletedBook)
             state.books = filtered
             
+        },
+        update(state, dupa) {
+            state.books = dupa
         }
     }
 
