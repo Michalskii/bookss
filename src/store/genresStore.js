@@ -1,6 +1,7 @@
 export default
 
  {
+     namespaced: true,
     state: () => ({
     genres: [],
       
@@ -24,6 +25,7 @@ export default
         delete(state, deletedGenre) {
             const filtered = state.genres.filter(genre=> genre.id !== deletedGenre)
             state.genres = filtered
+            console.log('genres store')
         }
     }
 

@@ -62,7 +62,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(["addBook"]),
+    ...mapActions("booksStore", ["addBook"]),
 
     addNewBook() {
       this.book.id = this.getIds + 1;

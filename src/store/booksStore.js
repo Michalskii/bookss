@@ -1,6 +1,7 @@
 export default
 
  {
+     namespaced:true,
     state: () => ({
     books: [],
       
@@ -15,8 +16,8 @@ export default
             commit('delete', deletedBook)
         },
 
-        updateList({commit}, dupa) {
-            commit('update', dupa)
+        updateList({commit}, bookList) {
+            commit('update', bookList)
         }
     },
 
@@ -31,8 +32,8 @@ export default
             state.books = filtered
             
         },
-        update(state, dupa) {
-            state.books = dupa
+        update(state, bookList) {
+            state.books = bookList
         }
     }
 

@@ -51,7 +51,7 @@ export default {
     DialogWrapper,
   },
   methods: {
-    ...mapActions(["deleteGenre"]),
+    ...mapActions("genresStore", ["deleteGenre"]),
 
     closeDialog() {
       this.dialog = false;

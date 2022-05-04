@@ -1,19 +1,25 @@
 export default
 
+
  {
+     namespaced: true,
     state: () => ({
     authors: [],
     
    
         
     }),
+    
     actions: {
         addAuthor({commit}, author) {
         commit('pushAuthor', author)
         },
+       
         deleteAuthor({commit}, deletedAuthor) {
             commit('delete', deletedAuthor)
         },
+
+        
         
     },
 
@@ -26,6 +32,8 @@ export default
             const filtered = state.authors.filter(author=> author.id !== deletedAuthor)
             state.authors = filtered
         },
+
+       
        
     
     } ,

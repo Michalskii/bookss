@@ -55,7 +55,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(["addAuthor"]),
+    ...mapActions("authorsStore", ["addAuthor"]),
 
     addNewAuthor() {
       this.author.id = this.getIds + 1;

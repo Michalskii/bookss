@@ -19,6 +19,7 @@
 </template>
 <script>
 import { mapActions } from "vuex";
+import { getIds } from "../components/getIds";
 
 export default {
   data() {
@@ -36,7 +37,7 @@ export default {
     },
 
     getIds() {
-      const ids = this.$store.state.genresStore.genres.map((genre) => {
+      const ids = this.genres.map((genre) => {
         return genre.id;
       });
 
@@ -47,7 +48,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(["addGenre"]),
+    ...mapActions("genresStore", ["addGenre"]),
 
     addNewGenre() {
       this.genre.id = this.getIds + 1;

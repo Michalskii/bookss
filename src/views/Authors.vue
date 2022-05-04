@@ -55,8 +55,8 @@ export default {
     },
   },
   methods: {
-    ...mapActions(["deleteAuthor"]),
-    ...mapActions(["updateList"]),
+    ...mapActions("authorsStore", ["deleteAuthor"]),
+    ...mapActions("booksStore", ["updateList"]),
     closeDialog() {
       this.dialog = false;
     },
@@ -65,17 +65,9 @@ export default {
     },
 
     deleteItem(item) {
-      // console.log(item.id);
+      const books = this.$store.state.booksStore.books;
 
-      const dupa = this.$store.state.booksStore.books;
-
-      // const filtered = dupa.filter((book) => book.author == item.id);
-
-      // console.log(dupa);
-
-      // console.log(filtered);
-
-      const newArr = dupa.map((obj) => {
+      const newBooks = books.map((obj) => {
         if (obj.author === item.id) {
           return { ...obj, author: null };
         }
@@ -83,8 +75,7 @@ export default {
         return obj;
       });
 
-      console.log(newArr);
-      this.updateList(newArr);
+      this.updateList(newBooks);
 
       this.deleteAuthor(item.id);
     },

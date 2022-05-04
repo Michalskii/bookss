@@ -70,7 +70,7 @@ export default {
     openDialog() {
       this.dialog = true;
     },
-    ...mapActions(["deleteBook"]),
+    ...mapActions("booksStore", ["deleteBook"]),
 
     deleteItem(item) {
       this.deleteBook(item.id);
