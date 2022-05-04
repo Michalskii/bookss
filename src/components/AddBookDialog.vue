@@ -95,7 +95,6 @@ export default {
       });
 
       const lastId = Math.max(0, ...ids);
-      console.log(lastId);
       return lastId;
     },
   },

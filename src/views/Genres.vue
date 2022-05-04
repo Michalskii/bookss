@@ -52,7 +52,7 @@ export default {
   },
   methods: {
     ...mapActions("genresStore", ["deleteGenre"]),
-
+    ...mapActions("booksStore", ["updateList"]),
     closeDialog() {
       this.dialog = false;
     },
@@ -60,6 +60,17 @@ export default {
       this.dialog = true;
     },
     deleteItem(item) {
+      const books = this.$store.state.booksStore.books;
+
+      const newBooks = books.map((obj) => {
+        if (obj.genreId === item.id) {
+          return { ...obj, genreId: null };
+        }
+
+        return obj;
+      });
+
+      this.updateList(newBooks);
       this.deleteGenre(item.id);
     },
   },

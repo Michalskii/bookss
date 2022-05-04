@@ -30,6 +30,7 @@
 </template>
 <script>
 import { mapActions } from "vuex";
+import { getIds } from "../components/getIds";
 export default {
   data() {
     return {
@@ -43,7 +44,19 @@ export default {
     authors() {
       return this.$store.state.authorsStore.authors;
     },
+  },
+  methods: {
+    ...mapActions("authorsStore", ["addAuthor"]),
 
+    addNewAuthor() {
+      this.author.id = getIds(this.authors) + 1;
+      let author = this.author;
+      this.addAuthor(author);
+      this.closeDialog();
+    },
+    closeDialog() {
+      this.$emit("close");
+    },
     getIds() {
       const ids = this.$store.state.authorsStore.authors.map((author) => {
         return author.id;
@@ -52,19 +65,6 @@ export default {
       const lastId = Math.max(0, ...ids);
       console.log(lastId);
       return lastId;
-    },
-  },
-  methods: {
-    ...mapActions("authorsStore", ["addAuthor"]),
-
-    addNewAuthor() {
-      this.author.id = this.getIds + 1;
-      let author = this.author;
-      this.addAuthor(author);
-      this.closeDialog();
-    },
-    closeDialog() {
-      this.$emit("close");
     },
   },
 };
