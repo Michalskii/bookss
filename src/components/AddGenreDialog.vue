@@ -35,23 +35,13 @@ export default {
     genres() {
       return this.$store.state.genresStore.genres;
     },
-
-    getIds() {
-      const ids = this.genres.map((genre) => {
-        return genre.id;
-      });
-
-      const lastId = Math.max(0, ...ids);
-      console.log(lastId);
-      return lastId;
-    },
   },
 
   methods: {
     ...mapActions("genresStore", ["addGenre"]),
 
     addNewGenre() {
-      this.genre.id = this.getIds + 1;
+      this.genre.id = getIds(this.genres) + 1;
 
       let genre = this.genre;
       this.addGenre(genre);

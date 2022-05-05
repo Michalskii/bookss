@@ -4,6 +4,5 @@ export const getIds = (array) => {
       return type.id;
     });
     const lastId = Math.max(0, ...ids);
-    console.log(lastId);
     return lastId;
   }

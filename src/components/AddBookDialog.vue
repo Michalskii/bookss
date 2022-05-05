@@ -52,6 +52,7 @@
 
 <script>
 import { mapActions } from "vuex";
+import { getIds } from "../components/getIds";
 
 export default {
   data() {
@@ -65,10 +66,8 @@ export default {
     ...mapActions("booksStore", ["addBook"]),
 
     addNewBook() {
-      this.book.id = this.getIds + 1;
-
+      this.book.id = getIds(this.books) + 1;
       let book = this.book;
-
       this.addBook(book);
       this.clearInput();
       this.closeDialog();
@@ -88,14 +87,8 @@ export default {
     authors() {
       return this.$store.state.authorsStore.authors;
     },
-
-    getIds() {
-      const ids = this.$store.state.booksStore.books.map((book) => {
-        return book.id;
-      });
-
-      const lastId = Math.max(0, ...ids);
-      return lastId;
+    books() {
+      return this.$store.state.booksStore.books;
     },
   },
 };

@@ -57,15 +57,6 @@ export default {
     closeDialog() {
       this.$emit("close");
     },
-    getIds() {
-      const ids = this.$store.state.authorsStore.authors.map((author) => {
-        return author.id;
-      });
-
-      const lastId = Math.max(0, ...ids);
-      console.log(lastId);
-      return lastId;
-    },
   },
 };
 </script>
