@@ -1,40 +1,37 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import Authors from '../views/Authors.vue'
-import Books from '../views/Books.vue'
-import Genres from '../views/Genres.vue'
+import Vue from "vue";
+import VueRouter from "vue-router";
+import HomeView from "../views/HomeView.vue";
+import Authors from "../views/Authors.vue";
+import Books from "../views/Books.vue";
+import Genres from "../views/Genres.vue";
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/',
-    name: 'home',
-    component: HomeView
+    path: "/",
+    name: "home",
+    component: HomeView,
   },
   {
-    path: '/authors',
-    name: 'authors',
-    component : Authors
+    path: "/authors",
+    name: "authors",
+    component: Authors,
   },
   {
-    path: '/books',
-    name: 'books',
-    component: Books
-
+    path: "/books",
+    name: "books",
+    component: Books,
   },
   {
-    path: '/genres',
-    name: 'Genres',
-    component: Genres
-
+    path: "/genres",
+    name: "Genres",
+    component: Genres,
   },
- 
-]
+];
 
 const router = new VueRouter({
-  routes
-})
+  routes,
+});
 
-export default router
+export default router;
