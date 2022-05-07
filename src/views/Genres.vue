@@ -10,9 +10,18 @@
     </dialog-wrapper>
 
     <v-btn color="primary" dark @click="openDialog"> Add new genre </v-btn>
+
+    <v-text-field
+      v-model="search"
+      append-icon="mdi-magnify"
+      label="Search"
+      single-line
+      hide-details
+    />
     <v-data-table
       :headers="headers"
       :items="genres"
+      :search="search"
       :items-per-page="5"
       class="elevation-2"
     >
@@ -33,6 +42,7 @@ export default {
   data() {
     return {
       dialog: false,
+      search: "",
       headers: [
         {
           text: "Genre",
