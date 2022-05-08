@@ -40,6 +40,7 @@ export default {
       },
     };
   },
+
   computed: {
     authors() {
       return this.$store.state.authorsStore.authors;

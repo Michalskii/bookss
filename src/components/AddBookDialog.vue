@@ -7,10 +7,6 @@
             <v-text-field label="Title" required v-model="book.title" />
           </v-col>
 
-          <!-- <v-col cols="12">
-            <v-text-field label="Book Id" required v-model="book.id" />
-          </v-col> -->
-
           <v-col cols="12">
             <v-text-field
               label="Year released"
@@ -20,24 +16,26 @@
           </v-col>
 
           <v-col cols="12" sm="6">
-            <v-select
+            <v-autocomplete
+              v-model="book.author"
               :items="authors"
               label="Author"
               item-text="fullName"
               item-value="id"
-              required
-              v-model="book.author"
-            />
+              color="blue"
+            >
+            </v-autocomplete>
           </v-col>
           <v-col cols="12" sm="6">
-            <v-select
+            <v-autocomplete
               :items="genres"
               item-text="name"
               item-value="id"
               label="Genre"
               required
               v-model="book.genreId"
-            />
+            >
+            </v-autocomplete>
           </v-col>
         </v-row>
       </v-container>
@@ -53,12 +51,19 @@
 <script>
 import { mapActions } from "vuex";
 import { getIds } from "../components/getIds";
+import Combobox from "../components/Combobox.vue";
 
 export default {
+  components: {
+    Combobox,
+  },
   data() {
     return {
       dialog: false,
       book: {},
+      dupa123: "",
+      label: "Author",
+      dupa: [1, 2, 3, 4],
     };
   },
 
@@ -68,6 +73,7 @@ export default {
     addNewBook() {
       this.book.id = getIds(this.books) + 1;
       let book = this.book;
+
       this.addBook(book);
       this.clearInput();
       this.closeDialog();
@@ -75,6 +81,7 @@ export default {
     clearInput() {
       this.book = "";
     },
+
     closeDialog() {
       this.$emit("close");
     },
