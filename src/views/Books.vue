@@ -11,6 +11,56 @@
 
     <v-btn color="primary" dark @click="openDialog"> Add new book </v-btn>
 
+    <v-dialog v-model="editBookDialog" max-width="500px">
+      <v-card>
+        <v-card-title>
+          <span class="text-h5">dsad</span>
+        </v-card-title>
+
+        <v-card-text>
+          <v-container>
+            <v-row>
+              <v-col cols="12" sm="6" md="4">
+                <v-text-field
+                  v-model="editedItem.title"
+                  label="Title"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6" md="4">
+                <v-text-field
+                  v-model="editedItem.released"
+                  label="Released"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6" md="4">
+                <v-text-field
+                  v-model="editedItem.author"
+                  item-text="fullName"
+                  label="Author Id"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6" md="4">
+                <v-text-field
+                  v-model="editedItem.genreId"
+                  label="Genre Id"
+                ></v-text-field>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" text @click="closeEditBookDialog">
+            Cancel
+          </v-btn>
+          <v-btn color="blue darken-1" text @click="saveEditedItem">
+            Save
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
     <v-text-field
       v-model="search"
       append-icon="mdi-magnify"
@@ -28,6 +78,7 @@
     >
       <template v-slot:[`item.actions`]="{ item }">
         <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
+        <v-icon small @click="editItem(item)"> mdi-pencil </v-icon>
       </template>
     </v-data-table>
   </div>
@@ -46,8 +97,14 @@ export default {
   data() {
     return {
       search: "",
-      // BookList: [],
       dialog: false,
+      editBookDialog: false,
+      editedItem: {
+        title: "",
+        released: 0,
+        author: "",
+        genreId: 0,
+      },
 
       headers: [
         {
@@ -64,16 +121,34 @@ export default {
     };
   },
   methods: {
+    ...mapActions("booksStore", ["deleteBook"]),
+    ...mapActions("booksStore", ["updateList"]),
+
     closeDialog() {
       this.dialog = false;
     },
     openDialog() {
       this.dialog = true;
     },
-    ...mapActions("booksStore", ["deleteBook"]),
+    closeEditBookDialog() {
+      this.editBookDialog = false;
+    },
+
+    saveEditedItem() {
+      Object.assign(this.books[this.editedIndex], this.editedItem);
+      this.updateList(this.books);
+
+      this.closeEditBookDialog();
+    },
 
     deleteItem(item) {
       this.deleteBook(item.id);
+    },
+
+    editItem(item) {
+      this.editedIndex = this.books.indexOf(item);
+      this.editedItem = Object.assign({}, item);
+      this.editBookDialog = true;
     },
   },
 
