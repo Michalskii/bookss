@@ -61,9 +61,7 @@ export default {
     return {
       dialog: false,
       book: {},
-      dupa123: "",
       label: "Author",
-      dupa: [1, 2, 3, 4],
     };
   },
 
