@@ -83,6 +83,7 @@ export default {
   },
   methods: {
     ...mapActions("booksStore", ["updateList"]),
+    ...mapActions("booksStore", ["tescik"]),
 
     closeDialog() {
       this.$emit("close");
@@ -90,9 +91,14 @@ export default {
 
     saveEditedItem() {
       console.log(this.editedIndex);
-
-      Object.assign(this.books[this.editedIndex], this.editedItem);
-      this.updateList(this.books);
+      console.log(this.editedItem);
+      //   Object.assign(this.books[this.editedIndex], this.editedItem);
+      //   this.updateList(this.books);
+      let payload = {
+        a: this.editedIndex,
+        b: this.editedItem,
+      };
+      this.tescik(payload);
       this.closeDialog();
     },
   },
