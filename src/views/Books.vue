@@ -11,7 +11,20 @@
 
     <v-btn color="primary" dark @click="openDialog"> Add new book </v-btn>
 
-    <v-dialog v-model="editBookDialog" max-width="500px">
+    <edit-item-wrapper
+      @close="closeDialog"
+      v-if="jajko === true"
+      :active="jajko"
+      title="Edit book"
+    >
+      <edit-book
+        @close="closeDialog"
+        v-bind:editedItem="this.editedItem"
+        :editedIndex="this.editedIndex"
+      />
+    </edit-item-wrapper>
+
+    <!-- <v-dialog v-model="editBookDialog" max-width="500px">
       <v-card>
         <v-card-title>
           <span class="text-h5">dsad</span>
@@ -59,7 +72,7 @@
           </v-btn>
         </v-card-actions>
       </v-card>
-    </v-dialog>
+    </v-dialog> -->
 
     <v-text-field
       v-model="search"
@@ -86,6 +99,8 @@
 <script>
 import AddBookDialog from "../components/AddBookDialog.vue";
 import DialogWrapper from "../components/DialogWrapper.vue";
+import EditBook from "../components/EditBook.vue";
+import EditItemWrapper from "../components/EditItemWrapper.vue";
 import { mapActions } from "vuex";
 
 export default {
@@ -93,12 +108,15 @@ export default {
   components: {
     AddBookDialog,
     DialogWrapper,
+    EditBook,
+    EditItemWrapper,
   },
   data() {
     return {
       search: "",
       dialog: false,
       editBookDialog: false,
+      jajko: false,
       editedItem: {
         title: "",
         released: 0,
@@ -126,6 +144,7 @@ export default {
 
     closeDialog() {
       this.dialog = false;
+      this.jajko = false;
     },
     openDialog() {
       this.dialog = true;
@@ -134,12 +153,12 @@ export default {
       this.editBookDialog = false;
     },
 
-    saveEditedItem() {
-      Object.assign(this.books[this.editedIndex], this.editedItem);
-      this.updateList(this.books);
+    // saveEditedItem() {
+    //   Object.assign(this.books[this.editedIndex], this.editedItem);
+    //   this.updateList(this.books);
 
-      this.closeEditBookDialog();
-    },
+    //   this.closeEditBookDialog();
+    // },
 
     deleteItem(item) {
       this.deleteBook(item.id);
@@ -148,7 +167,9 @@ export default {
     editItem(item) {
       this.editedIndex = this.books.indexOf(item);
       this.editedItem = Object.assign({}, item);
-      this.editBookDialog = true;
+      // console.log(this.editedIndex);
+      // console.log(this.editedItem);
+      this.jajko = true;
     },
   },
 
@@ -157,5 +178,6 @@ export default {
       return this.$store.state.booksStore.books;
     },
   },
+  props: {},
 };
 </script>
