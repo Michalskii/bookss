@@ -27,17 +27,26 @@
               >
               </v-autocomplete>
 
-              <v-text-field
+              <!-- <v-text-field
                 v-model="editedItem.author"
                 item-text="fullName"
                 label="Author Id"
-              ></v-text-field>
+              ></v-text-field> -->
             </v-col>
             <v-col cols="12" sm="6" md="4">
-              <v-text-field
+              <v-autocomplete
+                v-model="editedItem.genreId"
+                :items="genres"
+                label="genre"
+                item-text="name"
+                item-value="id"
+                color="blue"
+              >
+              </v-autocomplete>
+              <!-- <v-text-field
                 v-model="editedItem.genreId"
                 label="Genre Id"
-              ></v-text-field>
+              ></v-text-field> -->
             </v-col>
           </v-row>
         </v-container>
