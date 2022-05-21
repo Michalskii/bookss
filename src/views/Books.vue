@@ -13,7 +13,7 @@
 
     <edit-item-wrapper
       @close="closeDialog"
-      v-if="jajko === true"
+      v-if="jajko"
       :active="jajko"
       title="Edit book"
     >
@@ -23,6 +23,15 @@
         :editedIndex="this.editedIndex"
       />
     </edit-item-wrapper>
+
+    <details-wrapper
+      v-if="DetailsWrapper === true"
+      :active="DetailsWrapper"
+      title="Book details"
+      @close="closeDetailsWrapper"
+    >
+      <books-details v-bind:book="item"> </books-details>
+    </details-wrapper>
 
     <!-- <v-dialog v-model="editBookDialog" max-width="500px">
       <v-card>
@@ -86,12 +95,14 @@
       :headers="headers"
       :items="books"
       :search="search"
+      @click:row="showDetails"
       :items-per-page="5"
+      :custom-filter="filter"
       class="elevation-2"
     >
       <template v-slot:[`item.actions`]="{ item }">
-        <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
-        <v-icon small @click="editItem(item)"> mdi-pencil </v-icon>
+        <v-icon small @click.stop="deleteItem(item)"> mdi-delete </v-icon>
+        <v-icon small @click.stop="editItem(item)"> mdi-pencil </v-icon>
       </template>
     </v-data-table>
   </div>
@@ -102,6 +113,8 @@ import DialogWrapper from "../components/DialogWrapper.vue";
 import EditBook from "../components/EditBook.vue";
 import EditItemWrapper from "../components/EditItemWrapper.vue";
 import { mapActions } from "vuex";
+import DetailsWrapper from "../components/DetailsWrapper.vue";
+import BooksDetails from "../components/BooksDetails.vue";
 
 export default {
   name: "Books",
@@ -110,6 +123,8 @@ export default {
     DialogWrapper,
     EditBook,
     EditItemWrapper,
+    DetailsWrapper,
+    BooksDetails,
   },
   data() {
     return {
@@ -117,6 +132,7 @@ export default {
       dialog: false,
       editBookDialog: false,
       jajko: false,
+      DetailsWrapper: false,
       editedItem: {
         title: "",
         released: 0,
@@ -146,6 +162,9 @@ export default {
       this.dialog = false;
       this.jajko = false;
     },
+    closeDetailsWrapper() {
+      this.DetailsWrapper = false;
+    },
     openDialog() {
       this.dialog = true;
     },
@@ -153,23 +172,27 @@ export default {
       this.editBookDialog = false;
     },
 
-    // saveEditedItem() {
-    //   Object.assign(this.books[this.editedIndex], this.editedItem);
-    //   this.updateList(this.books);
-
-    //   this.closeEditBookDialog();
-    // },
-
     deleteItem(item) {
       this.deleteBook(item.id);
+    },
+    openDetails(item) {
+      console.log("Item", item);
+    },
+    filter(value, search, item) {
+      let filtered = RegExp(search, "i").test(item.title);
+      return filtered;
     },
 
     editItem(item) {
       this.editedIndex = this.books.indexOf(item);
       this.editedItem = Object.assign({}, item);
-      // console.log(this.editedIndex);
-      // console.log(this.editedItem);
+
       this.jajko = true;
+    },
+    showDetails(item) {
+      console.log("Item", item);
+      this.DetailsWrapper = true;
+      this.item = item;
     },
   },
 

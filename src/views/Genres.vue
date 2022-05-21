@@ -23,6 +23,7 @@
       :items="genres"
       :search="search"
       :items-per-page="5"
+      :custom-filter="filter"
       class="elevation-2"
     >
       <template v-slot:[`item.actions`]="{ item }">
@@ -68,6 +69,10 @@ export default {
     },
     openDialog() {
       this.dialog = true;
+    },
+    filter(value, search, item) {
+      let filtered = RegExp(search, "i").test(item.name);
+      return filtered;
     },
     deleteItem(item) {
       const books = this.$store.state.booksStore.books;

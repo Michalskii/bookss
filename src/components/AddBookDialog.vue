@@ -11,6 +11,7 @@
             <v-text-field
               label="Year released"
               v-model="book.released"
+              @keypress="validateNum"
               required
             />
           </v-col>
@@ -52,6 +53,7 @@
 import { mapActions } from "vuex";
 import { getIds } from "../components/getIds";
 import Combobox from "../components/Combobox.vue";
+import { NumbersOnly } from "../components/NumbersOnly";
 
 export default {
   components: {
@@ -75,6 +77,13 @@ export default {
       this.addBook(book);
       this.clearInput();
       this.closeDialog();
+      // if (!book.author) {
+      //   alert("dupa");
+      //   event.preventDefault();
+      // }
+    },
+    validateNum() {
+      return NumbersOnly();
     },
     clearInput() {
       this.book = "";

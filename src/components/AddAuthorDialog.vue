@@ -14,6 +14,7 @@
             <v-text-field
               v-model="author.yearBorn"
               label="Year born"
+              @keypress="validateNum"
               required
             />
           </v-col>
@@ -31,6 +32,7 @@
 <script>
 import { mapActions } from "vuex";
 import { getIds } from "../components/getIds";
+import { NumbersOnly } from "../components/NumbersOnly";
 export default {
   data() {
     return {
@@ -55,6 +57,23 @@ export default {
       this.addAuthor(author);
       this.closeDialog();
     },
+
+    validateNum() {
+      return NumbersOnly();
+    },
+    // NumbersOnly(evt) {
+    //   evt = evt ? evt : window.event;
+    //   var charCode = evt.which ? evt.which : evt.keyCode;
+    //   if (
+    //     charCode > 31 &&
+    //     (charCode < 48 || charCode > 57) &&
+    //     charCode !== 46
+    //   ) {
+    //     evt.preventDefault();
+    //   } else {
+    //     return true;
+    //   }
+    // },
     closeDialog() {
       this.$emit("close");
     },

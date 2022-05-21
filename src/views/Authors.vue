@@ -25,6 +25,7 @@
       :search="search"
       :items-per-page="5"
       class="elevation-2"
+      :custom-filter="filter"
     >
       <template v-slot:[`item.actions`]="{ item }">
         <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
@@ -72,6 +73,11 @@ export default {
     },
     openDialog() {
       this.dialog = true;
+    },
+
+    filter(value, search, item) {
+      let filtered = RegExp(search, "i").test(item.fullName);
+      return filtered;
     },
 
     deleteItem(item) {
