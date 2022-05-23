@@ -18,6 +18,9 @@ export default
         deleteAuthor({commit}, deletedAuthor) {
             commit('delete', deletedAuthor)
         },
+        tescik({commit}, payload) {
+            commit('jajko', payload)
+        }
 
         
         
@@ -32,7 +35,15 @@ export default
             const filtered = state.authors.filter(author=> author.id !== deletedAuthor)
             state.authors = filtered
         },
+        jajko(state,payload) {
+            let a = payload.a
+            let b = payload.b
+            console.log(a, b)
 
+            Object.assign(state.authors[a], b);
+            
+      
+        }
        
        
     

@@ -9,6 +9,19 @@
       <add-author-dialog @close="closeDialog" />
     </dialog-wrapper>
 
+    <edit-item-wrapper
+      @close="closeDialog"
+      v-if="jajko"
+      :active="jajko"
+      title="Edit author"
+    >
+      <edit-author
+        @close="closeDialog"
+        :editedItem="this.editedItem"
+        :editedIndex="this.editedIndex"
+      />
+    </edit-item-wrapper>
+
     <v-btn color="primary" dark @click="openDialog"> Add new author </v-btn>
 
     <v-text-field
@@ -29,6 +42,7 @@
     >
       <template v-slot:[`item.actions`]="{ item }">
         <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
+        <v-icon small @click.stop="editItem(item)"> mdi-pencil </v-icon>
       </template>
     </v-data-table>
   </div>
@@ -39,17 +53,21 @@ import DialogWrapper from "@/components/DialogWrapper";
 import AddAuthorDialog from "@/components/AddAuthorDialog";
 import { mapActions } from "vuex";
 import { mapState } from "vuex";
-
+import EditAuthor from "../components/EditAuthor.vue";
+import EditItemWrapper from "../components/EditItemWrapper.vue";
 export default {
   components: {
     DialogWrapper,
     AddAuthorDialog,
+    EditAuthor,
+    EditItemWrapper,
   },
 
   data() {
     return {
       dialog: false,
       search: "",
+      jajko: false,
       headers: [
         {
           text: "Name",
@@ -74,6 +92,7 @@ export default {
     ...mapActions("booksStore", ["updateList"]),
     closeDialog() {
       this.dialog = false;
+      this.jajko = false;
     },
     openDialog() {
       this.dialog = true;
@@ -82,6 +101,12 @@ export default {
     filter(value, search, item) {
       let filtered = RegExp(search, "i").test(item.fullName);
       return filtered;
+    },
+    editItem(item) {
+      this.editedIndex = this.authors.indexOf(item);
+      this.editedItem = Object.assign({}, item);
+      console.log(item);
+      this.jajko = true;
     },
 
     deleteItem(item) {

@@ -8,7 +8,18 @@
     >
       <add-genre-dialog @close="closeDialog" @newGenre="updateGenre($event)" />
     </dialog-wrapper>
-
+    <edit-item-wrapper
+      @close="closeDialog"
+      v-if="jajko"
+      :active="jajko"
+      title="Edit genre"
+    >
+      <edit-genre
+        @close="closeDialog"
+        :editedItem="this.editedItem"
+        :editedIndex="this.editedIndex"
+      />
+    </edit-item-wrapper>
     <v-btn color="primary" dark @click="openDialog"> Add new genre </v-btn>
 
     <v-text-field
@@ -28,6 +39,7 @@
     >
       <template v-slot:[`item.actions`]="{ item }">
         <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
+        <v-icon small @click.stop="editItem(item)"> mdi-pencil </v-icon>
       </template>
     </v-data-table>
   </div>
@@ -38,6 +50,8 @@ import AddGenreDialog from "../components/AddGenreDialog.vue";
 import DialogWrapper from "../components/DialogWrapper.vue";
 import { mapActions } from "vuex";
 import { mapState } from "vuex";
+import EditGenre from "../components/EditGenre.vue";
+import EditItemWrapper from "../components/EditItemWrapper.vue";
 
 export default {
   name: "Genres",
@@ -45,6 +59,7 @@ export default {
     return {
       dialog: false,
       search: "",
+      jajko: false,
       headers: [
         {
           text: "Genre",
@@ -61,15 +76,24 @@ export default {
   components: {
     AddGenreDialog,
     DialogWrapper,
+    EditGenre,
+    EditItemWrapper,
   },
   methods: {
     ...mapActions("genresStore", ["deleteGenre"]),
     ...mapActions("booksStore", ["updateList"]),
     closeDialog() {
       this.dialog = false;
+      this.jajko = false;
     },
     openDialog() {
       this.dialog = true;
+    },
+    editItem(item) {
+      this.editedIndex = this.genres.indexOf(item);
+      this.editedItem = Object.assign({}, item);
+      console.log(item);
+      this.jajko = true;
     },
     filter(value, search, item) {
       let filtered = RegExp(search, "i").test(item.name);

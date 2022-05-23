@@ -13,6 +13,9 @@ export default
         },
         deleteGenre({commit}, deletedGenre) {
             commit('delete', deletedGenre)
+        },
+        tescik({commit}, payload) {
+            commit('jajko', payload)
         }
     },
 
@@ -25,6 +28,15 @@ export default
         delete(state, deletedGenre) {
             const filtered = state.genres.filter(genre=> genre.id !== deletedGenre)
             state.genres = filtered
+        },
+        jajko(state,payload) {
+            let a = payload.a
+            let b = payload.b
+            console.log(a, b)
+
+            Object.assign(state.genres[a], b);
+            
+      
         }
     }
 
