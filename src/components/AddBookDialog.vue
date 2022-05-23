@@ -4,7 +4,12 @@
       <v-container>
         <v-row>
           <v-col cols="12">
-            <v-text-field label="Title" required v-model="book.title" />
+            <v-text-field
+              label="Title"
+              required
+              v-model="book.title"
+              :rules="inputRules"
+            />
           </v-col>
 
           <v-col cols="12">
@@ -24,6 +29,7 @@
               item-text="fullName"
               item-value="id"
               color="blue"
+              :rules="inputRules"
             >
             </v-autocomplete>
           </v-col>
@@ -44,7 +50,13 @@
     <v-card-actions>
       <v-spacer></v-spacer>
       <v-btn color="blue darken-1" text @click="closeDialog()">Close</v-btn>
-      <v-btn color="blue darken-1" text @click="addNewBook()">Save</v-btn>
+      <v-btn
+        color="blue darken-1"
+        :disabled="isDisabled"
+        text
+        @click="addNewBook()"
+        >Save</v-btn
+      >
     </v-card-actions>
   </div>
 </template>
@@ -64,6 +76,7 @@ export default {
       dialog: false,
       book: {},
       label: "Author",
+      inputRules: [(v) => !!v || "This field is required"],
     };
   },
 
@@ -77,10 +90,6 @@ export default {
       this.addBook(book);
       this.clearInput();
       this.closeDialog();
-      // if (!book.author) {
-      //   alert("dupa");
-      //   event.preventDefault();
-      // }
     },
     validateNum() {
       return NumbersOnly();
@@ -103,6 +112,13 @@ export default {
     },
     books() {
       return this.$store.state.booksStore.books;
+    },
+    isDisabled() {
+      if (!this.book.author || !this.book.title) {
+        return true;
+      } else {
+        return false;
+      }
     },
   },
 };

@@ -19,7 +19,7 @@
     >
       <edit-book
         @close="closeDialog"
-        v-bind:editedItem="this.editedItem"
+        :editedItem="this.editedItem"
         :editedIndex="this.editedIndex"
       />
     </edit-item-wrapper>
@@ -30,7 +30,7 @@
       title="Book details"
       @close="closeDetailsWrapper"
     >
-      <books-details v-bind:book="item"> </books-details>
+      <books-details :book="item"> </books-details>
     </details-wrapper>
 
     <!-- <v-dialog v-model="editBookDialog" max-width="500px">

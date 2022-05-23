@@ -8,6 +8,7 @@
               v-model="author.fullName"
               label="Full name"
               required
+              :rules="inputRules"
             />
           </v-col>
           <v-col cols="12" md="4" sm="6">
@@ -25,7 +26,14 @@
     <v-card-actions>
       <v-spacer></v-spacer>
       <v-btn color="blue darken-1" text @click="closeDialog;"> Close </v-btn>
-      <v-btn color="blue darken-1" text @click="addNewAuthor"> Save</v-btn>
+      <v-btn
+        color="blue darken-1"
+        text
+        @click="addNewAuthor"
+        :disabled="isDisabled"
+      >
+        Save</v-btn
+      >
     </v-card-actions>
   </div>
 </template>
@@ -40,12 +48,20 @@ export default {
         yearBorn: "",
         fullName: "",
       },
+      inputRules: [(v) => !!v || "This field is required"],
     };
   },
 
   computed: {
     authors() {
       return this.$store.state.authorsStore.authors;
+    },
+    isDisabled() {
+      if (!this.author.fullName) {
+        return true;
+      } else {
+        return false;
+      }
     },
   },
   methods: {
