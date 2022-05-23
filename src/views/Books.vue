@@ -115,6 +115,7 @@ import EditItemWrapper from "../components/EditItemWrapper.vue";
 import { mapActions } from "vuex";
 import DetailsWrapper from "../components/DetailsWrapper.vue";
 import BooksDetails from "../components/BooksDetails.vue";
+import { mapState } from "vuex";
 
 export default {
   name: "Books",
@@ -197,9 +198,10 @@ export default {
   },
 
   computed: {
-    books() {
-      return this.$store.state.booksStore.books;
-    },
+    // books() {
+    //   return this.$store.state.booksStore.books;
+    // },
+    ...mapState("booksStore", ["books"]),
   },
   props: {},
 };

@@ -41,6 +41,8 @@
 import { mapActions } from "vuex";
 import { getIds } from "../components/getIds";
 import { NumbersOnly } from "../components/NumbersOnly";
+import { mapState } from "vuex";
+
 export default {
   data() {
     return {
@@ -53,9 +55,11 @@ export default {
   },
 
   computed: {
-    authors() {
-      return this.$store.state.authorsStore.authors;
-    },
+    // authors() {
+    //   return this.$store.state.authorsStore.authors;
+    // },
+    ...mapState("authorsStore", ["authors"]),
+
     isDisabled() {
       if (!this.author.fullName) {
         return true;

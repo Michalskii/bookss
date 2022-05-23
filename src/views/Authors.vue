@@ -38,6 +38,8 @@
 import DialogWrapper from "@/components/DialogWrapper";
 import AddAuthorDialog from "@/components/AddAuthorDialog";
 import { mapActions } from "vuex";
+import { mapState } from "vuex";
+
 export default {
   components: {
     DialogWrapper,
@@ -61,9 +63,11 @@ export default {
     };
   },
   computed: {
-    authors() {
-      return this.$store.state.authorsStore.authors;
-    },
+    // authors() {
+    //   return this.$store.state.authorsStore.authors;
+    // },
+    ...mapState("authorsStore", ["authors"]),
+    ...mapState("booksStore", ["books"]),
   },
   methods: {
     ...mapActions("authorsStore", ["deleteAuthor"]),
@@ -81,9 +85,9 @@ export default {
     },
 
     deleteItem(item) {
-      const books = this.$store.state.booksStore.books;
+      // const books = this.$store.state.booksStore.books;
 
-      const newBooks = books.map((obj) => {
+      const newBooks = this.books.map((obj) => {
         if (obj.author === item.id) {
           return { ...obj, author: null };
         }

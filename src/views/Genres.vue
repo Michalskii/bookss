@@ -37,6 +37,7 @@
 import AddGenreDialog from "../components/AddGenreDialog.vue";
 import DialogWrapper from "../components/DialogWrapper.vue";
 import { mapActions } from "vuex";
+import { mapState } from "vuex";
 
 export default {
   name: "Genres",
@@ -75,9 +76,9 @@ export default {
       return filtered;
     },
     deleteItem(item) {
-      const books = this.$store.state.booksStore.books;
+      // const books = this.$store.state.booksStore.books;
 
-      const newBooks = books.map((obj) => {
+      const newBooks = this.books.map((obj) => {
         if (obj.genreId === item.id) {
           return { ...obj, genreId: null };
         }
@@ -90,9 +91,11 @@ export default {
     },
   },
   computed: {
-    genres() {
-      return this.$store.state.genresStore.genres;
-    },
+    // genres() {
+    //   return this.$store.state.genresStore.genres;
+    // },
+    ...mapState("genresStore", ["genres"]),
+    ...mapState("booksStore", ["books"]),
   },
 };
 </script>

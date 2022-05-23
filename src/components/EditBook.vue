@@ -68,21 +68,25 @@
 
 <script>
 import { mapActions } from "vuex";
+import { mapState } from "vuex";
 
 export default {
   props: ["editedItem", "editedIndex"],
   computed: {
-    books() {
-      return this.$store.state.booksStore.books;
-    },
+    // books() {
+    //   return this.$store.state.booksStore.books;
+    // },
 
-    authors() {
-      return this.$store.state.authorsStore.authors;
-    },
+    // authors() {
+    //   return this.$store.state.authorsStore.authors;
+    // },
 
-    genres() {
-      return this.$store.state.genresStore.genres;
-    },
+    // genres() {
+    //   return this.$store.state.genresStore.genres;
+    // },
+    ...mapState("booksStore", ["books"]),
+    ...mapState("genresStore", ["genres"]),
+    ...mapState("authorsStore", ["authors"]),
   },
 
   data() {
