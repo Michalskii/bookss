@@ -20,6 +20,15 @@
         :editedIndex="this.editedIndex"
       />
     </edit-item-wrapper>
+
+    <details-wrapper
+      v-if="DetailsWrapper"
+      :active="DetailsWrapper"
+      title="Genre details"
+      @close="closeDetailsWrapper"
+    >
+      <genre-details :genre="item" />
+    </details-wrapper>
     <v-btn color="primary" dark @click="openDialog"> Add new genre </v-btn>
 
     <v-text-field
@@ -33,6 +42,7 @@
       :headers="headers"
       :items="genres"
       :search="search"
+      @click:row="showDetails"
       :items-per-page="5"
       :custom-filter="filter"
       class="elevation-2"
@@ -52,6 +62,8 @@ import { mapActions } from "vuex";
 import { mapState } from "vuex";
 import EditGenre from "../components/EditGenre.vue";
 import EditItemWrapper from "../components/EditItemWrapper.vue";
+import DetailsWrapper from "../components/DetailsWrapper.vue";
+import GenreDetails from "../components/GenreDetails.vue";
 
 export default {
   name: "Genres",
@@ -60,6 +72,8 @@ export default {
       dialog: false,
       search: "",
       jajko: false,
+      DetailsWrapper: false,
+
       headers: [
         {
           text: "Genre",
@@ -78,6 +92,8 @@ export default {
     DialogWrapper,
     EditGenre,
     EditItemWrapper,
+    DetailsWrapper,
+    GenreDetails,
   },
   methods: {
     ...mapActions("genresStore", ["deleteGenre"]),
@@ -88,6 +104,14 @@ export default {
     },
     openDialog() {
       this.dialog = true;
+    },
+    showDetails(item) {
+      console.log("Item", item);
+      this.DetailsWrapper = true;
+      this.item = item;
+    },
+    closeDetailsWrapper() {
+      this.DetailsWrapper = false;
     },
     editItem(item) {
       this.editedIndex = this.genres.indexOf(item);

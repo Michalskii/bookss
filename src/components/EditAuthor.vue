@@ -7,13 +7,14 @@
             <v-col cols="12" sm="6" md="4">
               <v-text-field
                 v-model="editedItem.fullName"
-                label="Title"
+                label="Name"
               ></v-text-field>
             </v-col>
             <v-col cols="12" sm="6" md="4">
               <v-text-field
                 v-model="editedItem.yearBorn"
-                label="Released"
+                label="Year born"
+                @keypress="validateNum"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -37,6 +38,7 @@
 <script>
 import { mapActions } from "vuex";
 import { mapState } from "vuex";
+import { NumbersOnly } from "../components/NumbersOnly";
 
 export default {
   props: ["editedItem", "editedIndex"],
@@ -69,7 +71,9 @@ export default {
     closeDialog() {
       this.$emit("close");
     },
-
+    validateNum() {
+      return NumbersOnly();
+    },
     saveEditedItem() {
       console.log(this.editedIndex);
       console.log(this.editedItem);

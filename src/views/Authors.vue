@@ -22,6 +22,15 @@
       />
     </edit-item-wrapper>
 
+    <details-wrapper
+      v-if="DetailsWrapper"
+      :active="DetailsWrapper"
+      title="Author details"
+      @close="closeDetailsWrapper"
+    >
+      <authors-details :author="item" />
+    </details-wrapper>
+
     <v-btn color="primary" dark @click="openDialog"> Add new author </v-btn>
 
     <v-text-field
@@ -36,12 +45,13 @@
       :headers="headers"
       :items="authors"
       :search="search"
+      @click:row="showDetails"
       :items-per-page="5"
       class="elevation-2"
       :custom-filter="filter"
     >
       <template v-slot:[`item.actions`]="{ item }">
-        <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
+        <v-icon small @click.stop="deleteItem(item)"> mdi-delete </v-icon>
         <v-icon small @click.stop="editItem(item)"> mdi-pencil </v-icon>
       </template>
     </v-data-table>
@@ -55,12 +65,16 @@ import { mapActions } from "vuex";
 import { mapState } from "vuex";
 import EditAuthor from "../components/EditAuthor.vue";
 import EditItemWrapper from "../components/EditItemWrapper.vue";
+import DetailsWrapper from "../components/DetailsWrapper.vue";
+import AuthorsDetails from "../components/AuthorDetails.vue";
 export default {
   components: {
     DialogWrapper,
     AddAuthorDialog,
     EditAuthor,
     EditItemWrapper,
+    DetailsWrapper,
+    AuthorsDetails,
   },
 
   data() {
@@ -68,6 +82,8 @@ export default {
       dialog: false,
       search: "",
       jajko: false,
+      DetailsWrapper: false,
+
       headers: [
         {
           text: "Name",
@@ -81,9 +97,6 @@ export default {
     };
   },
   computed: {
-    // authors() {
-    //   return this.$store.state.authorsStore.authors;
-    // },
     ...mapState("authorsStore", ["authors"]),
     ...mapState("booksStore", ["books"]),
   },
@@ -96,6 +109,14 @@ export default {
     },
     openDialog() {
       this.dialog = true;
+    },
+    showDetails(item) {
+      console.log("Item", item);
+      this.DetailsWrapper = true;
+      this.item = item;
+    },
+    closeDetailsWrapper() {
+      this.DetailsWrapper = false;
     },
 
     filter(value, search, item) {
@@ -110,8 +131,6 @@ export default {
     },
 
     deleteItem(item) {
-      // const books = this.$store.state.booksStore.books;
-
       const newBooks = this.books.map((obj) => {
         if (obj.author === item.id) {
           return { ...obj, author: null };

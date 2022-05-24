@@ -198,9 +198,6 @@ export default {
   },
 
   computed: {
-    // books() {
-    //   return this.$store.state.booksStore.books;
-    // },
     ...mapState("booksStore", ["books"]),
   },
   props: {},

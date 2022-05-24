@@ -8,18 +8,35 @@
       <p>Genre- {{ genreName }}</p>
       <p>
         Author -
-        <span>{{ authorName }} </span
+        <span @click="showDetails()">{{ authorName }} </span
         ><span class="caption"> / Born: {{ authorYear }}</span>
       </p>
+
+      <details-wrapper
+        v-if="DetailsWrapper"
+        :active="DetailsWrapper"
+        title="Author details"
+        @close="closeDetailsWrapper"
+      >
+        <authors-details :author="item" :name="authorName" />
+      </details-wrapper>
     </v-card-text>
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
+import DetailsWrapper from "../components/DetailsWrapper.vue";
+import AuthorsDetails from "../components/AuthorDetails.vue";
 
 export default {
   props: ["book"],
+  data() {
+    return {
+      DetailsWrapper: false,
+    };
+  },
+  components: { DetailsWrapper, AuthorsDetails },
   computed: {
     ...mapState("booksStore", ["books"]),
     ...mapState("genresStore", ["genres"]),
@@ -59,7 +76,16 @@ export default {
       }
     },
   },
-  methods: {},
+  methods: {
+    showDetails(item) {
+      console.log("Item", this.book.author, name);
+      this.DetailsWrapper = true;
+      this.item = item;
+    },
+    closeDetailsWrapper() {
+      this.DetailsWrapper = false;
+    },
+  },
 };
 </script>
 <style>
