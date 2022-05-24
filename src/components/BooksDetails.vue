@@ -18,7 +18,12 @@
         title="Author details"
         @close="closeDetailsWrapper"
       >
-        <authors-details :author="item" :name="authorName" />
+        <authors-details
+          :author="this.book.author"
+          :name="this.authorName"
+          :tescik="this.tete"
+          :authorYear="this.authorYear"
+        />
       </details-wrapper>
     </v-card-text>
   </div>
@@ -34,6 +39,7 @@ export default {
   data() {
     return {
       DetailsWrapper: false,
+      tete: true,
     };
   },
   components: { DetailsWrapper, AuthorsDetails },
@@ -78,9 +84,10 @@ export default {
   },
   methods: {
     showDetails(item) {
-      console.log("Item", this.book.author, name);
+      console.log("Item", this.book.author);
       this.DetailsWrapper = true;
       this.item = item;
+      console.log(this.authorName, this.authorYear);
     },
     closeDetailsWrapper() {
       this.DetailsWrapper = false;
