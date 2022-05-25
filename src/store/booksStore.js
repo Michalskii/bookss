@@ -25,9 +25,6 @@ export default {
 			state.books.push(book);
 		},
 		delete(state, deletedBook) {
-			// const filtered = state.books.filter(book=> book.id !== deletedBook)
-			// state.books = filtered
-
 			state.books = state.books.filter((book) => book.id !== deletedBook);
 		},
 		update(state, bookList) {
