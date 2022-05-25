@@ -116,9 +116,9 @@ export default {
       ],
     };
   },
-  // created() {
-  //   this.fetchAuthors();
-  // },
+  created() {
+    this.fetchAuthors();
+  },
   computed: {
     ...mapState("authorsStore", ["authors"]),
     ...mapState("booksStore", ["books"]),

@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <nav class="nav">
-      <router-link class="navLinks" to="/books"
+      <!-- <router-link class="navLinks" to="/books"
         >Books <v-icon large>mdi-book-open-page-variant</v-icon></router-link
       >
       <router-link class="navLinks" to="/authors"
@@ -9,11 +9,14 @@
       >
       <router-link class="navLinks" to="/genres"
         >Genres <v-icon large>mdi-format-list-bulleted</v-icon></router-link
-      >
+      > -->
+      <v-btn to="/books">books</v-btn>
+      <v-btn to="/authors">authors</v-btn>
+      <v-btn to="/genres">genres</v-btn>
     </nav>
 
     <v-main class="mainSection">
-      <router-view />
+      <keep-alive><router-view /></keep-alive>
     </v-main>
   </v-app>
 </template>

@@ -107,9 +107,9 @@ export default {
     };
   },
 
-  // created() {
-  //   this.fetchGenres();
-  // },
+  created() {
+    this.fetchGenres();
+  },
 
   components: {
     AddGenreDialog,

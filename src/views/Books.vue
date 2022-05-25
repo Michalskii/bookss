@@ -175,9 +175,9 @@ export default {
       ],
     };
   },
-  // mounted() {
-  //   this.fetchBooks();
-  // },
+  mounted() {
+    this.fetchBooks();
+  },
   methods: {
     ...mapActions("booksStore", ["deleteBook"]),
     ...mapActions("booksStore", ["updateList"]),
