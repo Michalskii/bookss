@@ -31,7 +31,7 @@
     >
       <authors-details :author="item" />
     </details-wrapper>
-
+    <v-btn @click="ttt">Load Authors</v-btn>
     <v-btn
       color="primary"
       dark
@@ -116,9 +116,9 @@ export default {
       ],
     };
   },
-  created() {
-    this.fetchAuthors();
-  },
+  // created() {
+  //   this.fetchAuthors();
+  // },
   computed: {
     ...mapState("authorsStore", ["authors"]),
     ...mapState("booksStore", ["books"]),
@@ -131,6 +131,9 @@ export default {
     closeDialog() {
       this.dialog = false;
       this.jajko = false;
+    },
+    ttt() {
+      this.fetchAuthors();
     },
     fetchAuthors() {
       fetch("https://wolnelektury.pl/api/authors/")

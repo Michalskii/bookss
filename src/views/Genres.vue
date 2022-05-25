@@ -30,6 +30,7 @@
     >
       <genre-details :genre="item" />
     </details-wrapper>
+    <v-btn @click="ttt">Load genres</v-btn>
     <v-btn
       color="primary"
       dark
@@ -106,9 +107,9 @@ export default {
     };
   },
 
-  created() {
-    this.fetchGenres();
-  },
+  // created() {
+  //   this.fetchGenres();
+  // },
 
   components: {
     AddGenreDialog,
@@ -126,6 +127,9 @@ export default {
     closeDialog() {
       this.dialog = false;
       this.jajko = false;
+    },
+    ttt() {
+      this.fetchGenres();
     },
     fetchGenres() {
       fetch("https://wolnelektury.pl/api/genres/")
