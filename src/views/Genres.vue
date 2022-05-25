@@ -91,6 +91,7 @@ export default {
       search: "",
       jajko: false,
       DetailsWrapper: false,
+      fetchedGenres: [],
 
       headers: [
         {
@@ -99,10 +100,14 @@ export default {
           value: "name",
         },
 
-        { text: "Genre ID", value: "id" },
+        { text: "Genre ID", value: "slug" },
         { text: "Delete item", value: "actions" },
       ],
     };
+  },
+
+  created() {
+    this.fetchGenres();
   },
 
   components: {
@@ -116,9 +121,18 @@ export default {
   methods: {
     ...mapActions("genresStore", ["deleteGenre"]),
     ...mapActions("booksStore", ["updateList"]),
+    ...mapActions("genresStore", ["pushFetched"]),
+
     closeDialog() {
       this.dialog = false;
       this.jajko = false;
+    },
+    fetchGenres() {
+      fetch("https://wolnelektury.pl/api/genres/")
+        .then((response) => response.json())
+        .then((data) =>
+          (this.fetchedGenres = data)(this.pushFetched(this.fetchedGenres))
+        );
     },
     openDialog() {
       this.dialog = true;
@@ -149,15 +163,15 @@ export default {
     },
     deleteItem(item) {
       const newBooks = this.books.map((obj) => {
-        if (obj.genreId === item.id) {
-          return { ...obj, genreId: null };
+        if (obj.genre === item.name) {
+          return { ...obj, genre: null };
         }
 
         return obj;
       });
 
       this.updateList(newBooks);
-      this.deleteGenre(item.id);
+      this.deleteGenre(item.slug);
     },
   },
   computed: {

@@ -13,15 +13,23 @@ export default {
 		tescik({ commit }, payload) {
 			commit('jajko', payload);
 		},
+		pushFetched({ commit }, genres) {
+			commit('fetch', genres);
+		},
 	},
 
 	mutations: {
 		pushGenre(state, genre) {
 			state.genres.push(genre);
 		},
+		fetch(state, genres) {
+			console.log(genres);
+			state.genres = genres;
+			console.log(state.genres);
+		},
 		delete(state, deletedGenre) {
 			const filtered = state.genres.filter(
-				(genre) => genre.id !== deletedGenre
+				(genre) => genre.slug !== deletedGenre
 			);
 			state.genres = filtered;
 		},

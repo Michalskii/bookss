@@ -18,14 +18,22 @@ export default {
 		tescik({ commit }, payload) {
 			commit('jajko', payload);
 		},
+		pushFetched({ commit }, books) {
+			commit('fetch', books);
+		},
 	},
 
 	mutations: {
 		pushBook(state, book) {
 			state.books.push(book);
 		},
+		fetch(state, books) {
+			console.log(books);
+			state.books = books;
+			console.log(state.books);
+		},
 		delete(state, deletedBook) {
-			state.books = state.books.filter((book) => book.id !== deletedBook);
+			state.books = state.books.filter((book) => book.slug !== deletedBook);
 		},
 		update(state, bookList) {
 			state.books = bookList;

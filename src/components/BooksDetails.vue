@@ -51,8 +51,8 @@ export default {
     authorName() {
       try {
         const name = this.authors.find(
-          ({ id }) => id === this.book.author
-        ).fullName;
+          ({ slug }) => slug === this.book.author
+        ).name;
 
         return name;
       } catch {

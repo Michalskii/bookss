@@ -24,19 +24,19 @@
                 :items="authors"
                 label="Author"
                 :rules="inputRules"
-                item-text="fullName"
-                item-value="id"
+                item-text="name"
+                item-value="name"
                 color="blue"
               >
               </v-autocomplete>
             </v-col>
             <v-col cols="12" sm="6" md="4">
               <v-autocomplete
-                v-model="editedItem.genreId"
+                v-model="editedItem.genre"
                 :items="genres"
                 label="genre"
                 item-text="name"
-                item-value="id"
+                item-value="genre"
                 color="blue"
               >
               </v-autocomplete>
@@ -103,7 +103,7 @@ export default {
       return NumbersOnly();
     },
     addNewBook() {
-      this.editedItem.id = getIds(this.books) + 1;
+      // this.editedItem.id = getIds(this.books) + 1;
       let book = this.editedItem;
       console.log(this.editedItem);
       this.addBook(book);

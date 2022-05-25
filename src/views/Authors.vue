@@ -1,7 +1,7 @@
 <template>
   <div>
     <dialog-wrapper
-      v-if="dialog === true"
+      v-if="dialog"
       :active="dialog"
       @close="closeDialog"
       title="Add new author"
@@ -100,7 +100,7 @@ export default {
       dialog: false,
       search: "",
       create: false,
-
+      fetchedAuthors: [],
       jajko: false,
       DetailsWrapper: false,
 
@@ -108,13 +108,16 @@ export default {
         {
           text: "Name",
           align: "start",
-          value: "fullName",
+          value: "name",
         },
-        { text: "Year born", value: "yearBorn" },
-        { text: "Author ID", value: "id" },
+        // { text: "Year born", value: "yearBorn" },
+        { text: "Author ID", value: "slug" },
         { text: "Delete item", value: "actions" },
       ],
     };
+  },
+  created() {
+    this.fetchAuthors();
   },
   computed: {
     ...mapState("authorsStore", ["authors"]),
@@ -123,13 +126,23 @@ export default {
   methods: {
     ...mapActions("authorsStore", ["deleteAuthor"]),
     ...mapActions("booksStore", ["updateList"]),
+    ...mapActions("authorsStore", ["pushFetched"]),
+
     closeDialog() {
       this.dialog = false;
       this.jajko = false;
     },
+    fetchAuthors() {
+      fetch("https://wolnelektury.pl/api/authors/")
+        .then((response) => response.json())
+        .then((data) =>
+          (this.fetchedAuthors = data)(this.pushFetched(this.fetchedAuthors))
+        );
+    },
     edit() {
       this.create = false;
     },
+
     createItem() {
       this.create = true;
     },
@@ -146,7 +159,7 @@ export default {
     },
 
     filter(value, search, item) {
-      let filtered = RegExp(search, "i").test(item.fullName);
+      let filtered = RegExp(search, "i").test(item.name);
       return filtered;
     },
     editItem(item) {
@@ -158,7 +171,7 @@ export default {
 
     deleteItem(item) {
       const newBooks = this.books.map((obj) => {
-        if (obj.author === item.id) {
+        if (obj.author === item.slug) {
           return { ...obj, author: null };
         }
 
@@ -167,7 +180,7 @@ export default {
 
       this.updateList(newBooks);
 
-      this.deleteAuthor(item.id);
+      this.deleteAuthor(item.slug);
     },
   },
 };

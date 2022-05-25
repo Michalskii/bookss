@@ -8,9 +8,9 @@
       </v-card-text>
     </div>
     <div v-else>
-      <v-card-subtitle>Name - {{ author.fullName }}</v-card-subtitle>
+      <v-card-subtitle>Name - {{ author.name }}</v-card-subtitle>
       <v-card-text>
-        <p>Id - {{ author.id }}</p>
+        <p>Id - {{ author.slug }}</p>
         <p>Born - {{ author.yearBorn }}</p>
       </v-card-text>
     </div>

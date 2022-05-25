@@ -8,7 +8,7 @@
     >
       <add-book-dialog @close="closeDialog" />
     </dialog-wrapper>
-
+    <v-btn @click="ttt"> Load books </v-btn>
     <v-btn
       color="primary"
       dark
@@ -153,6 +153,7 @@ export default {
       jajko: false,
       create: false,
       DetailsWrapper: false,
+      fetchedBooks: [],
       editedItem: {
         title: "",
         released: 0,
@@ -166,17 +167,21 @@ export default {
           align: "start",
           value: "title",
         },
-        { text: "ID", value: "id" },
-        { text: "Released", value: "released" },
-        { text: "Author ID", value: "author" },
-        { text: "Genre ID", value: "genreId" },
+        { text: "ID", value: "slug" },
+
+        { text: "Author", value: "author" },
+        { text: "Genre", value: "genre" },
         { text: "Delete", value: "actions" },
       ],
     };
   },
+  // mounted() {
+  //   this.fetchBooks();
+  // },
   methods: {
     ...mapActions("booksStore", ["deleteBook"]),
     ...mapActions("booksStore", ["updateList"]),
+    ...mapActions("booksStore", ["pushFetched"]),
 
     closeDialog() {
       this.dialog = false;
@@ -184,6 +189,17 @@ export default {
     },
     closeDetailsWrapper() {
       this.DetailsWrapper = false;
+    },
+    ttt() {
+      this.fetchBooks();
+    },
+
+    fetchBooks() {
+      fetch("https://wolnelektury.pl/api/books/")
+        .then((response) => response.json())
+        .then((data) =>
+          (this.fetchedBooks = data)(this.pushFetched(this.fetchedBooks))
+        );
     },
 
     openDialog() {
@@ -194,7 +210,7 @@ export default {
     },
 
     deleteItem(item) {
-      this.deleteBook(item.id);
+      this.deleteBook(item.slug);
     },
     openDetails(item) {
       console.log("Item", item);
