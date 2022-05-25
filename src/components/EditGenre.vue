@@ -31,9 +31,10 @@
 <script>
 import { mapActions } from "vuex";
 import { mapState } from "vuex";
+import { getIds } from "../components/getIds";
 
 export default {
-  props: ["editedItem", "editedIndex"],
+  props: ["editedItem", "editedIndex", "create"],
   computed: {
     ...mapState("booksStore", ["books"]),
     ...mapState("genresStore", ["genres"]),
@@ -47,22 +48,32 @@ export default {
   },
   methods: {
     ...mapActions("genresStore", ["tescik"]),
+    ...mapActions("genresStore", ["addGenre"]),
 
     closeDialog() {
       this.$emit("close");
     },
+    addNewGenre() {
+      this.editedItem.id = getIds(this.genres) + 1;
+      let genre = this.editedItem;
+      this.addGenre(genre);
+      this.closeDialog();
+    },
 
     saveEditedItem() {
-      console.log(this.editedIndex);
-      console.log(this.editedItem);
-      //   Object.assign(this.books[this.editedIndex], this.editedItem);
-      //   this.updateList(this.books);
-      let payload = {
-        a: this.editedIndex,
-        b: this.editedItem,
-      };
-      this.tescik(payload);
-      this.closeDialog();
+      if (this.create == true) {
+        this.addNewGenre();
+      } else {
+        console.log(this.editedIndex);
+        console.log(this.editedItem);
+
+        let payload = {
+          a: this.editedIndex,
+          b: this.editedItem,
+        };
+        this.tescik(payload);
+        this.closeDialog();
+      }
     },
   },
 };

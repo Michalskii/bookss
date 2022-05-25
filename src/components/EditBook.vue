@@ -29,12 +29,6 @@
                 color="blue"
               >
               </v-autocomplete>
-
-              <!-- <v-text-field
-                v-model="editedItem.author"
-                item-text="fullName"
-                label="Author Id"
-              ></v-text-field> -->
             </v-col>
             <v-col cols="12" sm="6" md="4">
               <v-autocomplete
@@ -46,10 +40,6 @@
                 color="blue"
               >
               </v-autocomplete>
-              <!-- <v-text-field
-                v-model="editedItem.genreId"
-                label="Genre Id"
-              ></v-text-field> -->
             </v-col>
           </v-row>
         </v-container>
@@ -78,21 +68,11 @@
 import { mapActions } from "vuex";
 import { mapState } from "vuex";
 import { NumbersOnly } from "../components/NumbersOnly";
+import { getIds } from "../components/getIds";
 
 export default {
-  props: ["editedItem", "editedIndex"],
+  props: ["editedItem", "editedIndex", "create"],
   computed: {
-    // books() {
-    //   return this.$store.state.booksStore.books;
-    // },
-
-    // authors() {
-    //   return this.$store.state.authorsStore.authors;
-    // },
-
-    // genres() {
-    //   return this.$store.state.genresStore.genres;
-    // },
     ...mapState("booksStore", ["books"]),
     ...mapState("genresStore", ["genres"]),
     ...mapState("authorsStore", ["authors"]),
@@ -114,6 +94,7 @@ export default {
   methods: {
     ...mapActions("booksStore", ["updateList"]),
     ...mapActions("booksStore", ["tescik"]),
+    ...mapActions("booksStore", ["addBook"]),
 
     closeDialog() {
       this.$emit("close");
@@ -121,18 +102,27 @@ export default {
     validateNum() {
       return NumbersOnly();
     },
-
-    saveEditedItem() {
-      console.log(this.editedIndex);
+    addNewBook() {
+      this.editedItem.id = getIds(this.books) + 1;
+      let book = this.editedItem;
       console.log(this.editedItem);
-      //   Object.assign(this.books[this.editedIndex], this.editedItem);
-      //   this.updateList(this.books);
-      let payload = {
-        a: this.editedIndex,
-        b: this.editedItem,
-      };
-      this.tescik(payload);
+      this.addBook(book);
       this.closeDialog();
+    },
+    saveEditedItem() {
+      if (this.create == true) {
+        this.addNewBook();
+      } else {
+        console.log(this.editedIndex);
+        console.log(this.editedItem);
+
+        let payload = {
+          a: this.editedIndex,
+          b: this.editedItem,
+        };
+        this.tescik(payload);
+        this.closeDialog();
+      }
     },
   },
 };

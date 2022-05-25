@@ -18,6 +18,7 @@
         @close="closeDialog"
         :editedItem="this.editedItem"
         :editedIndex="this.editedIndex"
+        :create="this.create"
       />
     </edit-item-wrapper>
 
@@ -29,7 +30,16 @@
     >
       <genre-details :genre="item" />
     </details-wrapper>
-    <v-btn color="primary" dark @click="openDialog"> Add new genre </v-btn>
+    <v-btn
+      color="primary"
+      dark
+      @click="
+        createItem();
+        editItem();
+      "
+    >
+      Add new genre
+    </v-btn>
 
     <v-text-field
       v-model="search"
@@ -48,8 +58,16 @@
       class="elevation-2"
     >
       <template v-slot:[`item.actions`]="{ item }">
-        <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
-        <v-icon small @click.stop="editItem(item)"> mdi-pencil </v-icon>
+        <v-icon small @click.stop="deleteItem(item)"> mdi-delete </v-icon>
+        <v-icon
+          small
+          @click.stop="
+            editItem(item);
+            edit();
+          "
+        >
+          mdi-pencil
+        </v-icon>
       </template>
     </v-data-table>
   </div>
@@ -110,6 +128,12 @@ export default {
       this.DetailsWrapper = true;
       this.item = item;
     },
+    edit() {
+      this.create = false;
+    },
+    createItem() {
+      this.create = true;
+    },
     closeDetailsWrapper() {
       this.DetailsWrapper = false;
     },
@@ -124,8 +148,6 @@ export default {
       return filtered;
     },
     deleteItem(item) {
-      // const books = this.$store.state.booksStore.books;
-
       const newBooks = this.books.map((obj) => {
         if (obj.genreId === item.id) {
           return { ...obj, genreId: null };
@@ -139,9 +161,6 @@ export default {
     },
   },
   computed: {
-    // genres() {
-    //   return this.$store.state.genresStore.genres;
-    // },
     ...mapState("genresStore", ["genres"]),
     ...mapState("booksStore", ["books"]),
   },

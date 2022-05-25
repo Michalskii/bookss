@@ -9,7 +9,16 @@
       <add-book-dialog @close="closeDialog" />
     </dialog-wrapper>
 
-    <v-btn color="primary" dark @click="openDialog"> Add new book </v-btn>
+    <v-btn
+      color="primary"
+      dark
+      @click="
+        createBook();
+        editItem();
+      "
+    >
+      Add new book
+    </v-btn>
 
     <edit-item-wrapper
       @close="closeDialog"
@@ -21,11 +30,12 @@
         @close="closeDialog"
         :editedItem="this.editedItem"
         :editedIndex="this.editedIndex"
+        :create="this.create"
       />
     </edit-item-wrapper>
 
     <details-wrapper
-      v-if="DetailsWrapper === true"
+      v-if="DetailsWrapper"
       :active="DetailsWrapper"
       title="Book details"
       @close="closeDetailsWrapper"
@@ -102,7 +112,15 @@
     >
       <template v-slot:[`item.actions`]="{ item }">
         <v-icon small @click.stop="deleteItem(item)"> mdi-delete </v-icon>
-        <v-icon small @click.stop="editItem(item)"> mdi-pencil </v-icon>
+        <v-icon
+          small
+          @click.stop="
+            editItem(item);
+            edit();
+          "
+        >
+          mdi-pencil
+        </v-icon>
       </template>
     </v-data-table>
   </div>
@@ -133,6 +151,7 @@ export default {
       dialog: false,
       editBookDialog: false,
       jajko: false,
+      create: false,
       DetailsWrapper: false,
       editedItem: {
         title: "",
@@ -166,6 +185,7 @@ export default {
     closeDetailsWrapper() {
       this.DetailsWrapper = false;
     },
+
     openDialog() {
       this.dialog = true;
     },
@@ -183,11 +203,16 @@ export default {
       let filtered = RegExp(search, "i").test(item.title);
       return filtered;
     },
+    edit() {
+      this.create = false;
+    },
+    createBook() {
+      this.create = true;
+    },
 
     editItem(item) {
       this.editedIndex = this.books.indexOf(item);
       this.editedItem = Object.assign({}, item);
-
       this.jajko = true;
     },
     showDetails(item) {

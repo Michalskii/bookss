@@ -19,6 +19,7 @@
         @close="closeDialog"
         :editedItem="this.editedItem"
         :editedIndex="this.editedIndex"
+        :create="this.create"
       />
     </edit-item-wrapper>
 
@@ -31,7 +32,16 @@
       <authors-details :author="item" />
     </details-wrapper>
 
-    <v-btn color="primary" dark @click="openDialog"> Add new author </v-btn>
+    <v-btn
+      color="primary"
+      dark
+      @click="
+        createItem();
+        editItem();
+      "
+    >
+      Add new author
+    </v-btn>
 
     <v-text-field
       v-model="search"
@@ -52,7 +62,15 @@
     >
       <template v-slot:[`item.actions`]="{ item }">
         <v-icon small @click.stop="deleteItem(item)"> mdi-delete </v-icon>
-        <v-icon small @click.stop="editItem(item)"> mdi-pencil </v-icon>
+        <v-icon
+          small
+          @click.stop="
+            editItem(item);
+            edit();
+          "
+        >
+          mdi-pencil
+        </v-icon>
       </template>
     </v-data-table>
   </div>
@@ -81,6 +99,8 @@ export default {
     return {
       dialog: false,
       search: "",
+      create: false,
+
       jajko: false,
       DetailsWrapper: false,
 
@@ -106,6 +126,12 @@ export default {
     closeDialog() {
       this.dialog = false;
       this.jajko = false;
+    },
+    edit() {
+      this.create = false;
+    },
+    createItem() {
+      this.create = true;
     },
     openDialog() {
       this.dialog = true;

@@ -39,21 +39,11 @@
 import { mapActions } from "vuex";
 import { mapState } from "vuex";
 import { NumbersOnly } from "../components/NumbersOnly";
+import { getIds } from "../components/getIds";
 
 export default {
-  props: ["editedItem", "editedIndex"],
+  props: ["editedItem", "editedIndex", "create"],
   computed: {
-    // books() {
-    //   return this.$store.state.booksStore.books;
-    // },
-
-    // authors() {
-    //   return this.$store.state.authorsStore.authors;
-    // },
-
-    // genres() {
-    //   return this.$store.state.genresStore.genres;
-    // },
     ...mapState("booksStore", ["books"]),
     ...mapState("genresStore", ["genres"]),
     ...mapState("authorsStore", ["authors"]),
@@ -67,6 +57,7 @@ export default {
   methods: {
     ...mapActions("booksStore", ["updateList"]),
     ...mapActions("authorsStore", ["tescik"]),
+    ...mapActions("authorsStore", ["addAuthor"]),
 
     closeDialog() {
       this.$emit("close");
@@ -74,17 +65,26 @@ export default {
     validateNum() {
       return NumbersOnly();
     },
-    saveEditedItem() {
-      console.log(this.editedIndex);
-      console.log(this.editedItem);
-      //   Object.assign(this.books[this.editedIndex], this.editedItem);
-      //   this.updateList(this.books);
-      let payload = {
-        a: this.editedIndex,
-        b: this.editedItem,
-      };
-      this.tescik(payload);
+    addNewAuthor() {
+      this.editedItem.id = getIds(this.authors) + 1;
+      let author = this.editedItem;
+      this.addAuthor(author);
       this.closeDialog();
+    },
+    saveEditedItem() {
+      if (this.create == true) {
+        this.addNewAuthor();
+      } else {
+        console.log(this.editedIndex);
+        console.log(this.editedItem);
+
+        let payload = {
+          a: this.editedIndex,
+          b: this.editedItem,
+        };
+        this.tescik(payload);
+        this.closeDialog();
+      }
     },
   },
 };
