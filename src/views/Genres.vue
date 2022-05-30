@@ -4,7 +4,7 @@
       @close="closeDialog"
       v-if="editDialog"
       :active="editDialog"
-      title="Edit genre"
+      :title="dialogTitle"
     >
       <edit-genre
         @close="closeDialog"
@@ -28,6 +28,7 @@
       @click="
         createItem();
         editItem();
+        dialogTitle = 'Add genre';
       "
     >
       Add new genre
@@ -56,6 +57,7 @@
           @click.stop="
             editItem(item);
             edit();
+            dialogTitle = 'Edit genre';
           "
         >
           mdi-pencil
@@ -82,6 +84,7 @@ export default {
       editDialog: false,
       DetailsWrapper: false,
       fetchedGenres: [],
+      dialogTitle: "",
 
       headers: [
         {
@@ -112,13 +115,9 @@ export default {
     ...mapActions("genresStore", ["pushFetched", "fetchGenres"]),
 
     closeDialog() {
-      // this.dialog = false;
       this.editDialog = false;
     },
 
-    // openDialog() {
-    //   this.dialog = true;
-    // },
     showDetails(item) {
       this.DetailsWrapper = true;
       this.item = item;

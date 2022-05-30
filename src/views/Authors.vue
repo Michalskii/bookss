@@ -4,7 +4,7 @@
       @close="closeDialog"
       v-if="editDialog"
       :active="editDialog"
-      title="Edit author"
+      :title="dialogTitle"
     >
       <edit-author
         @close="closeDialog"
@@ -29,6 +29,7 @@
       @click="
         createItem();
         editItem();
+        dialogTitle = 'Add author';
       "
     >
       Add new author
@@ -58,6 +59,7 @@
           @click.stop="
             editItem(item);
             edit();
+            dialogTitle = 'Edit author';
           "
         >
           mdi-pencil
@@ -96,7 +98,6 @@ export default {
           align: "start",
           value: "name",
         },
-        // { text: "Year born", value: "yearBorn" },
         { text: "Author ID", value: "slug" },
         { text: "Delete item", value: "actions" },
       ],

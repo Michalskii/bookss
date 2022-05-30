@@ -14,16 +14,14 @@ export default {
 		deleteAuthor({ commit }, deletedAuthor) {
 			commit('delete', deletedAuthor);
 		},
-		tescik({ commit }, payload) {
-			commit('jajko', payload);
+		editAuthor({ commit }, payload) {
+			commit('saveEditedAuthor', payload);
 		},
-		pushFetched({ commit }, authors) {
-			commit('fetch', authors);
-		},
+
 		fetchAuthors({ commit }) {
 			authorsFetch()
 				.then((response) => response.json())
-				.then((data) => commit('FETCH_AUTHORS', data));
+				.then((data) => commit('updateAuthorsList', data));
 		},
 	},
 
@@ -31,11 +29,8 @@ export default {
 		pushAuthor(state, author) {
 			state.authors.push(author);
 		},
-		FETCH_AUTHORS(state, data) {
+		updateAuthorsList(state, data) {
 			state.authors = data;
-		},
-		fetch(state, authors) {
-			state.authors = authors;
 		},
 
 		delete(state, deletedAuthor) {
@@ -44,7 +39,7 @@ export default {
 			);
 			state.authors = filtered;
 		},
-		jajko(state, payload) {
+		saveEditedAuthor(state, payload) {
 			let a = payload.a;
 			let b = payload.b;
 

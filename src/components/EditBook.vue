@@ -68,10 +68,22 @@
 import { mapActions } from "vuex";
 import { mapState } from "vuex";
 import { NumbersOnly } from "../components/NumbersOnly";
-import { getIds } from "../components/getIds";
 
 export default {
-  props: ["editedItem", "editedIndex", "create"],
+  props: {
+    editedItem: {
+      type: Object,
+      required: true,
+    },
+    editedIndex: {
+      type: Number,
+      required: true,
+    },
+    create: {
+      type: Boolean,
+      required: true,
+    },
+  },
   computed: {
     ...mapState("booksStore", ["books"]),
     ...mapState("genresStore", ["genres"]),
@@ -93,7 +105,7 @@ export default {
   },
   methods: {
     ...mapActions("booksStore", ["updateList"]),
-    ...mapActions("booksStore", ["tescik"]),
+    ...mapActions("booksStore", ["editBook"]),
     ...mapActions("booksStore", ["addBook"]),
 
     closeDialog() {
@@ -103,9 +115,7 @@ export default {
       return NumbersOnly();
     },
     addNewBook() {
-      // this.editedItem.id = getIds(this.books) + 1;
       let book = this.editedItem;
-      console.log(this.editedItem);
       this.addBook(book);
       this.closeDialog();
     },
@@ -113,14 +123,11 @@ export default {
       if (this.create == true) {
         this.addNewBook();
       } else {
-        console.log(this.editedIndex);
-        console.log(this.editedItem);
-
         let payload = {
           a: this.editedIndex,
           b: this.editedItem,
         };
-        this.tescik(payload);
+        this.editBook(payload);
         this.closeDialog();
       }
     },

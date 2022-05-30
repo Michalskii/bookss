@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div v-if="this.tescik">
-      <v-card-subtitle>Name - {{ author }}</v-card-subtitle>
+    <div v-if="this.bookDetail">
+      <v-card-subtitle>Name - {{ name }}</v-card-subtitle>
       <v-card-text>
         <p>Id - {{ slug }}</p>
       </v-card-text>
@@ -17,7 +17,24 @@
 
 <script>
 export default {
-  props: ["author", "name", "tescik", "authorYear", "slug"],
+  props: {
+    author: {
+      type: Object,
+      required: false,
+    },
+    name: {
+      type: String,
+      required: false,
+    },
+    bookDetail: {
+      type: Boolean,
+      required: false,
+    },
+    slug: {
+      type: String,
+      required: false,
+    },
+  },
   computed: {},
   methods: {},
 };

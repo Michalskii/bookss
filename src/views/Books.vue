@@ -6,6 +6,7 @@
       @click="
         createBook();
         editItem();
+        dialogTitle = 'Add book';
       "
     >
       Add new book
@@ -15,7 +16,7 @@
       @close="closeDialog"
       v-if="editDialog"
       :active="editDialog"
-      title="Edit book"
+      :title="dialogTitle"
     >
       <edit-book
         @close="closeDialog"
@@ -58,6 +59,7 @@
           @click.stop="
             editItem(item);
             edit();
+            dialogTitle = 'Edit book';
           "
         >
           mdi-pencil
@@ -91,6 +93,7 @@ export default {
       editBookDialog: false,
       editDialog: false,
       create: false,
+      dialogTitle: "",
       DetailsWrapper: false,
       fetchedBooks: [],
       editedItem: {
@@ -129,6 +132,7 @@ export default {
       this.dialog = false;
       this.editDialog = false;
     },
+
     closeDetailsWrapper() {
       this.DetailsWrapper = false;
     },

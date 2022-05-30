@@ -18,16 +18,14 @@ export default {
 		updateList({ commit }, bookList) {
 			commit('update', bookList);
 		},
-		tescik({ commit }, payload) {
-			commit('jajko', payload);
+		editBook({ commit }, payload) {
+			commit('saveEditedBook', payload);
 		},
-		pushFetched({ commit }, books) {
-			commit('fetch', books);
-		},
+
 		fetchBooks({ commit }) {
 			booksFetch()
 				.then((response) => response.json())
-				.then((data) => commit('FETCH_BOOKS', data));
+				.then((data) => commit('updateBooksList', data));
 		},
 	},
 
@@ -35,19 +33,17 @@ export default {
 		pushBook(state, book) {
 			state.books.push(book);
 		},
-		FETCH_BOOKS(state, data) {
+		updateBooksList(state, data) {
 			state.books = data;
 		},
-		fetch(state, books) {
-			state.books = books;
-		},
+
 		delete(state, deletedBook) {
 			state.books = state.books.filter((book) => book.slug !== deletedBook);
 		},
 		update(state, bookList) {
 			state.books = bookList;
 		},
-		jajko(state, payload) {
+		saveEditedBook(state, payload) {
 			let a = payload.a;
 			let b = payload.b;
 

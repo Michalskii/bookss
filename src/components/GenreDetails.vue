@@ -9,7 +9,13 @@
 
 <script>
 export default {
-  props: ["genre"],
+  // props: ["genre"],
+  props: {
+    genre: {
+      type: Object,
+      required: true,
+    },
+  },
   computed: {},
   methods: {},
 };

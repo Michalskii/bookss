@@ -17,10 +17,9 @@
         @close="closeDetailsWrapper"
       >
         <authors-details
-          :author="this.book.author"
-          :name="this.authorName"
+          :name="this.book.author"
           :slug="this.authorSlug"
-          :tescik="this.tete"
+          :bookDetail="this.bookDetail"
         />
       </details-wrapper>
     </v-card-text>
@@ -33,11 +32,16 @@ import DetailsWrapper from "../components/DetailsWrapper.vue";
 import AuthorsDetails from "../components/AuthorDetails.vue";
 
 export default {
-  props: ["book"],
+  props: {
+    book: {
+      type: Object,
+      required: true,
+    },
+  },
   data() {
     return {
       DetailsWrapper: false,
-      tete: true,
+      bookDetail: true,
     };
   },
   components: { DetailsWrapper, AuthorsDetails },
@@ -46,35 +50,16 @@ export default {
     ...mapState("genresStore", ["genres"]),
     ...mapState("authorsStore", ["authors"]),
 
-    authorName() {
-      try {
-        const name = this.authors.find(
-          ({ slug }) => slug === this.book.author
-        ).name;
-
-        return name;
-      } catch {
-        return "Who knows?";
-      }
-    },
-
     authorSlug() {
       const found = this.authors.find(
         ({ name }) => name === this.book.author
       ).slug;
       return found;
     },
-
     genreName() {
-      try {
-        const name = this.genres.find(
-          ({ id }) => id === this.book.genreId
-        ).name;
-
-        return name;
-      } catch {
+      if (!this.book.genre) {
         return "Unknown";
-      }
+      } else return this.book.genre;
     },
   },
   methods: {
