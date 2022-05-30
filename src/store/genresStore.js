@@ -1,3 +1,5 @@
+import { genresFetch } from '@/services/genresService';
+
 export default {
 	namespaced: true,
 	state: () => ({
@@ -16,16 +18,22 @@ export default {
 		pushFetched({ commit }, genres) {
 			commit('fetch', genres);
 		},
+		fetchGenres({ commit }) {
+			genresFetch()
+				.then((response) => response.json())
+				.then((data) => commit('FETCH_GENRES', data));
+		},
 	},
 
 	mutations: {
 		pushGenre(state, genre) {
 			state.genres.push(genre);
 		},
+		FETCH_GENRES(state, data) {
+			state.genres = data;
+		},
 		fetch(state, genres) {
-			console.log(genres);
 			state.genres = genres;
-			console.log(state.genres);
 		},
 		delete(state, deletedGenre) {
 			const filtered = state.genres.filter(
@@ -36,7 +44,6 @@ export default {
 		jajko(state, payload) {
 			let a = payload.a;
 			let b = payload.b;
-			console.log(a, b);
 
 			Object.assign(state.genres[a], b);
 		},

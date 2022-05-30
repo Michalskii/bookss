@@ -64,9 +64,6 @@ export default {
       if (this.create == true) {
         this.addNewGenre();
       } else {
-        console.log(this.editedIndex);
-        console.log(this.editedItem);
-
         let payload = {
           a: this.editedIndex,
           b: this.editedItem,

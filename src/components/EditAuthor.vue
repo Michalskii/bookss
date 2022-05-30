@@ -10,13 +10,13 @@
                 label="Name"
               ></v-text-field>
             </v-col>
-            <v-col cols="12" sm="6" md="4">
+            <!-- <v-col cols="12" sm="6" md="4">
               <v-text-field
                 v-model="editedItem.yearBorn"
                 label="Year born"
                 @keypress="validateNum"
               ></v-text-field>
-            </v-col>
+            </v-col> -->
           </v-row>
         </v-container>
       </v-card-text>

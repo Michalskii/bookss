@@ -1,17 +1,9 @@
 <template>
   <div>
-    <dialog-wrapper
-      v-if="dialog === true"
-      :active="dialog"
-      @close="closeDialog"
-      title="Add new genre"
-    >
-      <add-genre-dialog @close="closeDialog" @newGenre="updateGenre($event)" />
-    </dialog-wrapper>
     <edit-item-wrapper
       @close="closeDialog"
-      v-if="jajko"
-      :active="jajko"
+      v-if="editDialog"
+      :active="editDialog"
       title="Edit genre"
     >
       <edit-genre
@@ -30,7 +22,6 @@
     >
       <genre-details :genre="item" />
     </details-wrapper>
-    <v-btn @click="ttt">Load genres</v-btn>
     <v-btn
       color="primary"
       dark
@@ -75,8 +66,6 @@
 </template> 
 
 <script>
-import AddGenreDialog from "../components/AddGenreDialog.vue";
-import DialogWrapper from "../components/DialogWrapper.vue";
 import { mapActions } from "vuex";
 import { mapState } from "vuex";
 import EditGenre from "../components/EditGenre.vue";
@@ -90,7 +79,7 @@ export default {
     return {
       dialog: false,
       search: "",
-      jajko: false,
+      editDialog: false,
       DetailsWrapper: false,
       fetchedGenres: [],
 
@@ -112,8 +101,6 @@ export default {
   },
 
   components: {
-    AddGenreDialog,
-    DialogWrapper,
     EditGenre,
     EditItemWrapper,
     DetailsWrapper,
@@ -122,27 +109,17 @@ export default {
   methods: {
     ...mapActions("genresStore", ["deleteGenre"]),
     ...mapActions("booksStore", ["updateList"]),
-    ...mapActions("genresStore", ["pushFetched"]),
+    ...mapActions("genresStore", ["pushFetched", "fetchGenres"]),
 
     closeDialog() {
-      this.dialog = false;
-      this.jajko = false;
+      // this.dialog = false;
+      this.editDialog = false;
     },
-    ttt() {
-      this.fetchGenres();
-    },
-    fetchGenres() {
-      fetch("https://wolnelektury.pl/api/genres/")
-        .then((response) => response.json())
-        .then((data) =>
-          (this.fetchedGenres = data)(this.pushFetched(this.fetchedGenres))
-        );
-    },
-    openDialog() {
-      this.dialog = true;
-    },
+
+    // openDialog() {
+    //   this.dialog = true;
+    // },
     showDetails(item) {
-      console.log("Item", item);
       this.DetailsWrapper = true;
       this.item = item;
     },
@@ -158,8 +135,7 @@ export default {
     editItem(item) {
       this.editedIndex = this.genres.indexOf(item);
       this.editedItem = Object.assign({}, item);
-      console.log(item);
-      this.jajko = true;
+      this.editDialog = true;
     },
     filter(value, search, item) {
       let filtered = RegExp(search, "i").test(item.name);

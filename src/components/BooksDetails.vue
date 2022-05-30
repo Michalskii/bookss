@@ -3,13 +3,11 @@
     <v-card-subtitle class="font-italic"
       >Title - {{ book.title }}</v-card-subtitle
     >
-    <v-card-text
-      ><p>Released: {{ book.released }}</p>
+    <v-card-text>
       <p>Genre- {{ genreName }}</p>
       <p>
         Author -
-        <span @click="showDetails()">{{ authorName }} </span
-        ><span class="caption"> / Born: {{ authorYear }}</span>
+        <span @click="showDetails()">{{ book.author }} </span>
       </p>
 
       <details-wrapper
@@ -21,8 +19,8 @@
         <authors-details
           :author="this.book.author"
           :name="this.authorName"
+          :slug="this.authorSlug"
           :tescik="this.tete"
-          :authorYear="this.authorYear"
         />
       </details-wrapper>
     </v-card-text>
@@ -59,17 +57,14 @@ export default {
         return "Who knows?";
       }
     },
-    authorYear() {
-      try {
-        const name = this.authors.find(
-          ({ id }) => id === this.book.author
-        ).yearBorn;
 
-        return name;
-      } catch {
-        return "Long time ago";
-      }
+    authorSlug() {
+      const found = this.authors.find(
+        ({ name }) => name === this.book.author
+      ).slug;
+      return found;
     },
+
     genreName() {
       try {
         const name = this.genres.find(
@@ -84,10 +79,8 @@ export default {
   },
   methods: {
     showDetails(item) {
-      console.log("Item", this.book.author);
       this.DetailsWrapper = true;
       this.item = item;
-      console.log(this.authorName, this.authorYear);
     },
     closeDetailsWrapper() {
       this.DetailsWrapper = false;

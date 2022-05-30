@@ -1,18 +1,9 @@
 <template>
   <div>
-    <dialog-wrapper
-      v-if="dialog"
-      :active="dialog"
-      @close="closeDialog"
-      title="Add new author"
-    >
-      <add-author-dialog @close="closeDialog" />
-    </dialog-wrapper>
-
     <edit-item-wrapper
       @close="closeDialog"
-      v-if="jajko"
-      :active="jajko"
+      v-if="editDialog"
+      :active="editDialog"
       title="Edit author"
     >
       <edit-author
@@ -31,7 +22,7 @@
     >
       <authors-details :author="item" />
     </details-wrapper>
-    <v-btn @click="ttt">Load Authors</v-btn>
+
     <v-btn
       color="primary"
       dark
@@ -77,8 +68,6 @@
 </template>
 
 <script>
-import DialogWrapper from "@/components/DialogWrapper";
-import AddAuthorDialog from "@/components/AddAuthorDialog";
 import { mapActions } from "vuex";
 import { mapState } from "vuex";
 import EditAuthor from "../components/EditAuthor.vue";
@@ -87,8 +76,6 @@ import DetailsWrapper from "../components/DetailsWrapper.vue";
 import AuthorsDetails from "../components/AuthorDetails.vue";
 export default {
   components: {
-    DialogWrapper,
-    AddAuthorDialog,
     EditAuthor,
     EditItemWrapper,
     DetailsWrapper,
@@ -97,11 +84,10 @@ export default {
 
   data() {
     return {
-      dialog: false,
       search: "",
       create: false,
       fetchedAuthors: [],
-      jajko: false,
+      editDialog: false,
       DetailsWrapper: false,
 
       headers: [
@@ -116,7 +102,8 @@ export default {
       ],
     };
   },
-  created() {
+
+  mounted() {
     this.fetchAuthors();
   },
   computed: {
@@ -126,22 +113,13 @@ export default {
   methods: {
     ...mapActions("authorsStore", ["deleteAuthor"]),
     ...mapActions("booksStore", ["updateList"]),
-    ...mapActions("authorsStore", ["pushFetched"]),
+    ...mapActions("authorsStore", ["pushFetched", "fetchAuthors"]),
 
     closeDialog() {
-      this.dialog = false;
-      this.jajko = false;
+      // this.dialog = false;
+      this.editDialog = false;
     },
-    ttt() {
-      this.fetchAuthors();
-    },
-    fetchAuthors() {
-      fetch("https://wolnelektury.pl/api/authors/")
-        .then((response) => response.json())
-        .then((data) =>
-          (this.fetchedAuthors = data)(this.pushFetched(this.fetchedAuthors))
-        );
-    },
+
     edit() {
       this.create = false;
     },
@@ -149,11 +127,8 @@ export default {
     createItem() {
       this.create = true;
     },
-    openDialog() {
-      this.dialog = true;
-    },
+
     showDetails(item) {
-      console.log("Item", item);
       this.DetailsWrapper = true;
       this.item = item;
     },
@@ -168,8 +143,7 @@ export default {
     editItem(item) {
       this.editedIndex = this.authors.indexOf(item);
       this.editedItem = Object.assign({}, item);
-      console.log(item);
-      this.jajko = true;
+      this.editDialog = true;
     },
 
     deleteItem(item) {

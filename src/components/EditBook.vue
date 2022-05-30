@@ -11,13 +11,13 @@
                 :rules="inputRules"
               ></v-text-field>
             </v-col>
-            <v-col cols="12" sm="6" md="4">
+            <!-- <v-col cols="12" sm="6" md="4">
               <v-text-field
                 v-model="editedItem.released"
                 label="Released"
                 @keypress="validateNum"
               ></v-text-field>
-            </v-col>
+            </v-col> -->
             <v-col cols="12" sm="6" md="4">
               <v-autocomplete
                 v-model="editedItem.author"
@@ -34,7 +34,7 @@
               <v-autocomplete
                 v-model="editedItem.genre"
                 :items="genres"
-                label="genre"
+                label="Genre"
                 item-text="name"
                 item-value="genre"
                 color="blue"

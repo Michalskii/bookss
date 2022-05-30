@@ -1,3 +1,5 @@
+import { authorsFetch } from '@/services/authorsService';
+
 export default {
 	namespaced: true,
 	state: () => ({
@@ -18,18 +20,22 @@ export default {
 		pushFetched({ commit }, authors) {
 			commit('fetch', authors);
 		},
+		fetchAuthors({ commit }) {
+			authorsFetch()
+				.then((response) => response.json())
+				.then((data) => commit('FETCH_AUTHORS', data));
+		},
 	},
 
 	mutations: {
 		pushAuthor(state, author) {
 			state.authors.push(author);
-			console.log(author);
-			console.log(state.authors);
+		},
+		FETCH_AUTHORS(state, data) {
+			state.authors = data;
 		},
 		fetch(state, authors) {
-			console.log(authors);
 			state.authors = authors;
-			console.log(state.authors);
 		},
 
 		delete(state, deletedAuthor) {
@@ -41,7 +47,6 @@ export default {
 		jajko(state, payload) {
 			let a = payload.a;
 			let b = payload.b;
-			console.log(a, b);
 
 			Object.assign(state.authors[a], b);
 		},
