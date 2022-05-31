@@ -12,6 +12,7 @@
         :items-per-page="5"
         class="elevation-2"
     /></v-card>
+    <v-btn @click="closeDialog">Close</v-btn>
   </v-dialog>
 </template>
 <script>
