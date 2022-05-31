@@ -64,7 +64,7 @@
             edit();
             dialogTitle = 'Edit genre';
           "
-        >
+          >mdi-pencil
         </v-icon>
         <v-icon small @click.stop="showBooks(item)"
           >mdi-view-list-outline</v-icon
