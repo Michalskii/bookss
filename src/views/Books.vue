@@ -113,7 +113,7 @@ export default {
 
         { text: "Author", value: "author" },
         { text: "Genre", value: "genre" },
-        { text: "Delete", value: "actions" },
+        { text: "Actions", value: "actions" },
       ],
     };
   },

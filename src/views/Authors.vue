@@ -1,5 +1,10 @@
 <template>
   <div>
+    <book-list
+      :active="bookListDialog"
+      @close="bookListDialog = false"
+      :books="fetchedByAuthors"
+    ></book-list>
     <edit-item-wrapper
       @close="closeDialog"
       v-if="editDialog"
@@ -64,6 +69,9 @@
         >
           mdi-pencil
         </v-icon>
+        <v-icon small @click.stop="showBooks(item)"
+          >mdi-view-list-outline</v-icon
+        >
       </template>
     </v-data-table>
   </div>
@@ -76,12 +84,15 @@ import EditAuthor from "../components/EditAuthor.vue";
 import EditItemWrapper from "../components/EditItemWrapper.vue";
 import DetailsWrapper from "../components/DetailsWrapper.vue";
 import AuthorsDetails from "../components/AuthorDetails.vue";
+import BookList from "../components/BookList.vue";
+
 export default {
   components: {
     EditAuthor,
     EditItemWrapper,
     DetailsWrapper,
     AuthorsDetails,
+    BookList,
   },
 
   data() {
@@ -91,6 +102,7 @@ export default {
       fetchedAuthors: [],
       editDialog: false,
       DetailsWrapper: false,
+      bookListDialog: false,
 
       headers: [
         {
@@ -99,7 +111,7 @@ export default {
           value: "name",
         },
         { text: "Author ID", value: "slug" },
-        { text: "Delete item", value: "actions" },
+        { text: "Actions", value: "actions" },
       ],
     };
   },
@@ -108,17 +120,24 @@ export default {
     this.fetchAuthors();
   },
   computed: {
-    ...mapState("authorsStore", ["authors"]),
+    ...mapState("authorsStore", ["authors", "fetchedByAuthors"]),
     ...mapState("booksStore", ["books"]),
   },
   methods: {
     ...mapActions("authorsStore", ["deleteAuthor"]),
     ...mapActions("booksStore", ["updateList"]),
-    ...mapActions("authorsStore", ["pushFetched", "fetchAuthors"]),
+    ...mapActions("authorsStore", [
+      "pushFetched",
+      "fetchAuthors",
+      "fetchBookList",
+    ]),
 
     closeDialog() {
-      // this.dialog = false;
       this.editDialog = false;
+    },
+    showBooks(item) {
+      this.fetchBookList(item);
+      this.bookListDialog = true;
     },
 
     edit() {

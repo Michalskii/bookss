@@ -1,5 +1,10 @@
 <template>
   <div>
+    <book-list
+      :active="bookListDialog"
+      @close="bookListDialog = false"
+      :books="fetchedByGenres"
+    ></book-list>
     <edit-item-wrapper
       @close="closeDialog"
       v-if="editDialog"
@@ -60,8 +65,10 @@
             dialogTitle = 'Edit genre';
           "
         >
-          mdi-pencil
         </v-icon>
+        <v-icon small @click.stop="showBooks(item)"
+          >mdi-view-list-outline</v-icon
+        >
       </template>
     </v-data-table>
   </div>
@@ -74,6 +81,7 @@ import EditGenre from "../components/EditGenre.vue";
 import EditItemWrapper from "../components/EditItemWrapper.vue";
 import DetailsWrapper from "../components/DetailsWrapper.vue";
 import GenreDetails from "../components/GenreDetails.vue";
+import BookList from "../components/BookList.vue";
 
 export default {
   name: "Genres",
@@ -85,6 +93,7 @@ export default {
       DetailsWrapper: false,
       fetchedGenres: [],
       dialogTitle: "",
+      bookListDialog: false,
 
       headers: [
         {
@@ -94,7 +103,7 @@ export default {
         },
 
         { text: "Genre ID", value: "slug" },
-        { text: "Delete item", value: "actions" },
+        { text: "Actions", value: "actions" },
       ],
     };
   },
@@ -108,19 +117,30 @@ export default {
     EditItemWrapper,
     DetailsWrapper,
     GenreDetails,
+    BookList,
   },
   methods: {
     ...mapActions("genresStore", ["deleteGenre"]),
     ...mapActions("booksStore", ["updateList"]),
-    ...mapActions("genresStore", ["pushFetched", "fetchGenres"]),
+    ...mapActions("genresStore", [
+      "pushFetched",
+      "fetchGenres",
+      "fetchBookList",
+    ]),
 
     closeDialog() {
       this.editDialog = false;
     },
 
+    showBooks(item) {
+      this.fetchBookList(item);
+      this.bookListDialog = true;
+    },
+
     showDetails(item) {
       this.DetailsWrapper = true;
       this.item = item;
+      console.log(this.test);
     },
     edit() {
       this.create = false;
@@ -156,6 +176,7 @@ export default {
   computed: {
     ...mapState("genresStore", ["genres"]),
     ...mapState("booksStore", ["books"]),
+    ...mapState("genresStore", ["fetchedByGenres"]),
   },
 };
 </script>

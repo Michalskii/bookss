@@ -4,6 +4,7 @@ export default {
 	namespaced: true,
 	state: () => ({
 		genres: [],
+		fetchedByGenres: [],
 	}),
 	actions: {
 		addGenre({ commit }, genre) {
@@ -21,6 +22,11 @@ export default {
 				.then((response) => response.json())
 				.then((data) => commit('updateGenresList', data));
 		},
+		fetchBookList({ commit }, genre) {
+			fetch(`https://wolnelektury.pl/api/genres/${genre.slug}/books/`)
+				.then((response) => response.json())
+				.then((data) => commit('updateFetchedGenres', data));
+		},
 	},
 
 	mutations: {
@@ -30,7 +36,9 @@ export default {
 		updateGenresList(state, data) {
 			state.genres = data;
 		},
-
+		updateFetchedGenres(state, data) {
+			state.fetchedByGenres = data;
+		},
 		delete(state, deletedGenre) {
 			const filtered = state.genres.filter(
 				(genre) => genre.slug !== deletedGenre

@@ -4,6 +4,7 @@ export default {
 	namespaced: true,
 	state: () => ({
 		authors: [],
+		fetchedByAuthors: [],
 	}),
 
 	actions: {
@@ -23,6 +24,13 @@ export default {
 				.then((response) => response.json())
 				.then((data) => commit('updateAuthorsList', data));
 		},
+
+		fetchBookList({ commit }, author) {
+			fetch(`https://wolnelektury.pl/api/authors/${author.slug}/books/
+			`)
+				.then((response) => response.json())
+				.then((data) => commit('updateFetchedBooks', data));
+		},
 	},
 
 	mutations: {
@@ -31,6 +39,9 @@ export default {
 		},
 		updateAuthorsList(state, data) {
 			state.authors = data;
+		},
+		updateFetchedBooks(state, data) {
+			state.fetchedByAuthors = data;
 		},
 
 		delete(state, deletedAuthor) {
