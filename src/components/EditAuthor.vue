@@ -6,17 +6,17 @@
           <v-row>
             <v-col cols="12" sm="6" md="4">
               <v-text-field
-                v-model="editedItem.fullName"
+                v-model="editedItem.name"
                 label="Name"
               ></v-text-field>
             </v-col>
-            <v-col cols="12" sm="6" md="4">
+            <!-- <v-col cols="12" sm="6" md="4">
               <v-text-field
                 v-model="editedItem.yearBorn"
                 label="Year born"
                 @keypress="validateNum"
               ></v-text-field>
-            </v-col>
+            </v-col> -->
           </v-row>
         </v-container>
       </v-card-text>
@@ -26,7 +26,12 @@
         <v-btn color="blue darken-1" text @click="closeDialog()">
           Cancel
         </v-btn>
-        <v-btn color="blue darken-1" text @click="saveEditedItem()">
+        <v-btn
+          color="blue darken-1"
+          :disabled="isDisabled"
+          text
+          @click="saveEditedItem()"
+        >
           Save
         </v-btn>
       </v-card-actions>
@@ -42,11 +47,27 @@ import { NumbersOnly } from "../components/NumbersOnly";
 import { getIds } from "../components/getIds";
 
 export default {
-  props: ["editedItem", "editedIndex", "create"],
+  props: {
+    editedItem: {
+      type: Object,
+      required: true,
+    },
+    editedIndex: {
+      type: Number,
+      required: true,
+    },
+    create: {
+      type: Boolean,
+      required: true,
+    },
+  },
   computed: {
     ...mapState("booksStore", ["books"]),
     ...mapState("genresStore", ["genres"]),
     ...mapState("authorsStore", ["authors"]),
+    isDisabled() {
+      return !this.editedItem.name;
+    },
   },
 
   data() {
@@ -56,7 +77,7 @@ export default {
   },
   methods: {
     ...mapActions("booksStore", ["updateList"]),
-    ...mapActions("authorsStore", ["tescik"]),
+    ...mapActions("authorsStore", ["editAuthor"]),
     ...mapActions("authorsStore", ["addAuthor"]),
 
     closeDialog() {
@@ -65,6 +86,7 @@ export default {
     validateNum() {
       return NumbersOnly();
     },
+
     addNewAuthor() {
       this.editedItem.id = getIds(this.authors) + 1;
       let author = this.editedItem;
@@ -82,7 +104,7 @@ export default {
           a: this.editedIndex,
           b: this.editedItem,
         };
-        this.tescik(payload);
+        this.editAuthor(payload);
         this.closeDialog();
       }
     },

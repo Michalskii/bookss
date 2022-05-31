@@ -1,17 +1,15 @@
 <template>
   <div>
-    <div v-if="this.tescik">
-      <v-card-subtitle>Name - {{ this.name }}</v-card-subtitle>
+    <div v-if="this.bookDetail">
+      <v-card-subtitle>Name - {{ name }}</v-card-subtitle>
       <v-card-text>
-        <p>Id - {{ this.author }}</p>
-        <p>Born - {{ this.authorYear }}</p>
+        <p>Id - {{ slug }}</p>
       </v-card-text>
     </div>
     <div v-else>
-      <v-card-subtitle>Name - {{ author.fullName }}</v-card-subtitle>
+      <v-card-subtitle>Name - {{ author.name }}</v-card-subtitle>
       <v-card-text>
-        <p>Id - {{ author.id }}</p>
-        <p>Born - {{ author.yearBorn }}</p>
+        <p>Id - {{ author.slug }}</p>
       </v-card-text>
     </div>
   </div>
@@ -19,7 +17,24 @@
 
 <script>
 export default {
-  props: ["author", "name", "tescik", "authorYear"],
+  props: {
+    author: {
+      type: Object,
+      required: false,
+    },
+    name: {
+      type: String,
+      required: false,
+    },
+    bookDetail: {
+      type: Boolean,
+      required: false,
+    },
+    slug: {
+      type: String,
+      required: false,
+    },
+  },
   computed: {},
   methods: {},
 };

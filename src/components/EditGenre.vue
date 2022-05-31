@@ -19,7 +19,12 @@
         <v-btn color="blue darken-1" text @click="closeDialog()">
           Cancel
         </v-btn>
-        <v-btn color="blue darken-1" text @click="saveEditedItem()">
+        <v-btn
+          color="blue darken-1"
+          :disabled="isDisabled"
+          text
+          @click="saveEditedItem()"
+        >
           Save
         </v-btn>
       </v-card-actions>
@@ -34,11 +39,27 @@ import { mapState } from "vuex";
 import { getIds } from "../components/getIds";
 
 export default {
-  props: ["editedItem", "editedIndex", "create"],
+  props: {
+    editedItem: {
+      type: Object,
+      required: true,
+    },
+    editedIndex: {
+      type: Number,
+      required: true,
+    },
+    create: {
+      type: Boolean,
+      required: true,
+    },
+  },
   computed: {
     ...mapState("booksStore", ["books"]),
     ...mapState("genresStore", ["genres"]),
     ...mapState("authorsStore", ["authors"]),
+    isDisabled() {
+      return !this.editedItem.name;
+    },
   },
 
   data() {
@@ -47,7 +68,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions("genresStore", ["tescik"]),
+    ...mapActions("genresStore", ["editGenre"]),
     ...mapActions("genresStore", ["addGenre"]),
 
     closeDialog() {
@@ -64,14 +85,11 @@ export default {
       if (this.create == true) {
         this.addNewGenre();
       } else {
-        console.log(this.editedIndex);
-        console.log(this.editedItem);
-
         let payload = {
           a: this.editedIndex,
           b: this.editedItem,
         };
-        this.tescik(payload);
+        this.editGenre(payload);
         this.closeDialog();
       }
     },

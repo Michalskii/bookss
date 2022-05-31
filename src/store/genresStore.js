@@ -1,3 +1,5 @@
+import { genresFetch } from '@/services/genresService';
+
 export default {
 	namespaced: true,
 	state: () => ({
@@ -10,8 +12,14 @@ export default {
 		deleteGenre({ commit }, deletedGenre) {
 			commit('delete', deletedGenre);
 		},
-		tescik({ commit }, payload) {
-			commit('jajko', payload);
+		editGenre({ commit }, payload) {
+			commit('saveEditedGenre', payload);
+		},
+
+		fetchGenres({ commit }) {
+			genresFetch()
+				.then((response) => response.json())
+				.then((data) => commit('updateGenresList', data));
 		},
 	},
 
@@ -19,16 +27,19 @@ export default {
 		pushGenre(state, genre) {
 			state.genres.push(genre);
 		},
+		updateGenresList(state, data) {
+			state.genres = data;
+		},
+
 		delete(state, deletedGenre) {
 			const filtered = state.genres.filter(
-				(genre) => genre.id !== deletedGenre
+				(genre) => genre.slug !== deletedGenre
 			);
 			state.genres = filtered;
 		},
-		jajko(state, payload) {
+		saveEditedGenre(state, payload) {
 			let a = payload.a;
 			let b = payload.b;
-			console.log(a, b);
 
 			Object.assign(state.genres[a], b);
 		},

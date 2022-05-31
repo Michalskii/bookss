@@ -3,13 +3,11 @@
     <v-card-subtitle class="font-italic"
       >Title - {{ book.title }}</v-card-subtitle
     >
-    <v-card-text
-      ><p>Released: {{ book.released }}</p>
+    <v-card-text>
       <p>Genre- {{ genreName }}</p>
       <p>
         Author -
-        <span @click="showDetails()">{{ authorName }} </span
-        ><span class="caption"> / Born: {{ authorYear }}</span>
+        <span @click="showDetails()">{{ book.author }} </span>
       </p>
 
       <details-wrapper
@@ -19,10 +17,9 @@
         @close="closeDetailsWrapper"
       >
         <authors-details
-          :author="this.book.author"
-          :name="this.authorName"
-          :tescik="this.tete"
-          :authorYear="this.authorYear"
+          :name="this.book.author"
+          :slug="this.authorSlug"
+          :bookDetail="this.bookDetail"
         />
       </details-wrapper>
     </v-card-text>
@@ -35,11 +32,16 @@ import DetailsWrapper from "../components/DetailsWrapper.vue";
 import AuthorsDetails from "../components/AuthorDetails.vue";
 
 export default {
-  props: ["book"],
+  props: {
+    book: {
+      type: Object,
+      required: true,
+    },
+  },
   data() {
     return {
       DetailsWrapper: false,
-      tete: true,
+      bookDetail: true,
     };
   },
   components: { DetailsWrapper, AuthorsDetails },
@@ -48,46 +50,22 @@ export default {
     ...mapState("genresStore", ["genres"]),
     ...mapState("authorsStore", ["authors"]),
 
-    authorName() {
-      try {
-        const name = this.authors.find(
-          ({ id }) => id === this.book.author
-        ).fullName;
-
-        return name;
-      } catch {
-        return "Who knows?";
-      }
-    },
-    authorYear() {
-      try {
-        const name = this.authors.find(
-          ({ id }) => id === this.book.author
-        ).yearBorn;
-
-        return name;
-      } catch {
-        return "Long time ago";
-      }
+    authorSlug() {
+      const found = this.authors.find(
+        ({ name }) => name === this.book.author
+      ).slug;
+      return found;
     },
     genreName() {
-      try {
-        const name = this.genres.find(
-          ({ id }) => id === this.book.genreId
-        ).name;
-
-        return name;
-      } catch {
+      if (!this.book.genre) {
         return "Unknown";
-      }
+      } else return this.book.genre;
     },
   },
   methods: {
     showDetails(item) {
-      console.log("Item", this.book.author);
       this.DetailsWrapper = true;
       this.item = item;
-      console.log(this.authorName, this.authorYear);
     },
     closeDetailsWrapper() {
       this.DetailsWrapper = false;

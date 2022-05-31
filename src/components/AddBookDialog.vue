@@ -113,12 +113,15 @@ export default {
     books() {
       return this.$store.state.booksStore.books;
     },
+    // isDisabled() {
+    //   if (!this.book.author || !this.book.title) {
+    //     return true;
+    //   } else {
+    //     return false;
+    //   }
+    // },
     isDisabled() {
-      if (!this.book.author || !this.book.title) {
-        return true;
-      } else {
-        return false;
-      }
+      return !this.author.fullName;
     },
   },
 };

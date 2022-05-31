@@ -1,18 +1,10 @@
 <template>
   <div>
-    <dialog-wrapper
-      v-if="dialog === true"
-      :active="dialog"
-      @close="closeDialog"
-      title="Add new genre"
-    >
-      <add-genre-dialog @close="closeDialog" @newGenre="updateGenre($event)" />
-    </dialog-wrapper>
     <edit-item-wrapper
       @close="closeDialog"
-      v-if="jajko"
-      :active="jajko"
-      title="Edit genre"
+      v-if="editDialog"
+      :active="editDialog"
+      :title="dialogTitle"
     >
       <edit-genre
         @close="closeDialog"
@@ -36,6 +28,7 @@
       @click="
         createItem();
         editItem();
+        dialogTitle = 'Add genre';
       "
     >
       Add new genre
@@ -64,6 +57,7 @@
           @click.stop="
             editItem(item);
             edit();
+            dialogTitle = 'Edit genre';
           "
         >
           mdi-pencil
@@ -74,8 +68,6 @@
 </template> 
 
 <script>
-import AddGenreDialog from "../components/AddGenreDialog.vue";
-import DialogWrapper from "../components/DialogWrapper.vue";
 import { mapActions } from "vuex";
 import { mapState } from "vuex";
 import EditGenre from "../components/EditGenre.vue";
@@ -89,8 +81,10 @@ export default {
     return {
       dialog: false,
       search: "",
-      jajko: false,
+      editDialog: false,
       DetailsWrapper: false,
+      fetchedGenres: [],
+      dialogTitle: "",
 
       headers: [
         {
@@ -99,15 +93,17 @@ export default {
           value: "name",
         },
 
-        { text: "Genre ID", value: "id" },
+        { text: "Genre ID", value: "slug" },
         { text: "Delete item", value: "actions" },
       ],
     };
   },
 
+  created() {
+    this.fetchGenres();
+  },
+
   components: {
-    AddGenreDialog,
-    DialogWrapper,
     EditGenre,
     EditItemWrapper,
     DetailsWrapper,
@@ -116,15 +112,13 @@ export default {
   methods: {
     ...mapActions("genresStore", ["deleteGenre"]),
     ...mapActions("booksStore", ["updateList"]),
+    ...mapActions("genresStore", ["pushFetched", "fetchGenres"]),
+
     closeDialog() {
-      this.dialog = false;
-      this.jajko = false;
+      this.editDialog = false;
     },
-    openDialog() {
-      this.dialog = true;
-    },
+
     showDetails(item) {
-      console.log("Item", item);
       this.DetailsWrapper = true;
       this.item = item;
     },
@@ -140,8 +134,7 @@ export default {
     editItem(item) {
       this.editedIndex = this.genres.indexOf(item);
       this.editedItem = Object.assign({}, item);
-      console.log(item);
-      this.jajko = true;
+      this.editDialog = true;
     },
     filter(value, search, item) {
       let filtered = RegExp(search, "i").test(item.name);
@@ -149,15 +142,15 @@ export default {
     },
     deleteItem(item) {
       const newBooks = this.books.map((obj) => {
-        if (obj.genreId === item.id) {
-          return { ...obj, genreId: null };
+        if (obj.genre === item.name) {
+          return { ...obj, genre: null };
         }
 
         return obj;
       });
 
       this.updateList(newBooks);
-      this.deleteGenre(item.id);
+      this.deleteGenre(item.slug);
     },
   },
   computed: {
