@@ -1,6 +1,7 @@
 <template>
   <div>
     <book-list
+      :loading="loading"
       :active="bookListDialog"
       @close="bookListDialog = false"
       :books="fetchedByGenres"
@@ -87,6 +88,7 @@ export default {
   name: "Genres",
   data() {
     return {
+      loading: false,
       dialog: false,
       search: "",
       editDialog: false,
@@ -132,15 +134,20 @@ export default {
       this.editDialog = false;
     },
 
-    showBooks(item) {
-      this.fetchBookList(item);
-      this.bookListDialog = true;
+    async showBooks(item) {
+      try {
+        this.loading = true;
+        await this.fetchBookList(item);
+        this.bookListDialog = true;
+      } finally {
+        this.loading = false;
+      }
     },
 
     showDetails(item) {
       this.DetailsWrapper = true;
       this.item = item;
-      console.log(this.test);
+      console.log(this.item);
     },
     edit() {
       this.create = false;

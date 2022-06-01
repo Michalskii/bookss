@@ -3,6 +3,7 @@
     <book-list
       :active="bookListDialog"
       @close="bookListDialog = false"
+      :loading="loading"
       :books="fetchedByAuthors"
     ></book-list>
     <edit-item-wrapper
@@ -99,6 +100,7 @@ export default {
     return {
       search: "",
       create: false,
+      loading: false,
       fetchedAuthors: [],
       editDialog: false,
       DetailsWrapper: false,
@@ -135,9 +137,19 @@ export default {
     closeDialog() {
       this.editDialog = false;
     },
-    showBooks(item) {
-      this.fetchBookList(item);
-      this.bookListDialog = true;
+    // showBooks(item) {
+    //   this.fetchBookList(item);
+    //   this.bookListDialog = true;
+    // },
+
+    async showBooks(item) {
+      try {
+        this.loading = true;
+        await this.fetchBookList(item);
+        this.bookListDialog = true;
+      } finally {
+        this.loading = false;
+      }
     },
 
     edit() {
