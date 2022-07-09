@@ -28,25 +28,30 @@
     >
       <genre-details :genre="item" />
     </details-wrapper>
-    <v-btn
-      color="primary"
-      dark
-      @click="
-        createItem();
-        editItem();
-        dialogTitle = 'Add genre';
-      "
-    >
-      Add new genre
-    </v-btn>
 
-    <v-text-field
-      v-model="search"
-      append-icon="mdi-magnify"
-      label="Search"
-      single-line
-      hide-details
-    />
+    <div class="jajko">
+      <v-btn
+        color="primary addNew"
+        dark
+        @click="
+          createItem();
+          editItem();
+          dialogTitle = 'Add genre';
+        "
+      >
+        Add new genre
+      </v-btn>
+
+      <v-text-field
+        v-model="search"
+        append-icon="mdi-magnify"
+        label="Search"
+        class="searchBar"
+        single-line
+        outlined
+        hide-details
+      />
+    </div>
     <v-data-table
       :headers="headers"
       :items="genres"
@@ -54,7 +59,7 @@
       @click:row="showDetails"
       :items-per-page="5"
       :custom-filter="filter"
-      class="elevation-2"
+      class="elevation-2 my-data-table"
     >
       <template v-slot:[`item.actions`]="{ item }">
         <v-icon small @click.stop="deleteItem(item)"> mdi-delete </v-icon>
@@ -187,3 +192,37 @@ export default {
   },
 };
 </script>
+
+<style  >
+.my-data-table.v-data-table {
+  margin-left: 3rem;
+  margin-right: 3rem;
+  margin-top: 1rem;
+  border-radius: 30px;
+
+  background: rgba(248, 248, 248, 0.3);
+}
+.v-data-table > .v-data-table__wrapper > table > tbody > tr > td,
+.v-data-table > .v-data-table__wrapper > table > thead > tr > td,
+.v-data-table > .v-data-table__wrapper > table > tfoot > tr > td {
+  font-size: 0.875rem;
+  height: 48px;
+  color: red;
+}
+
+.addNew.v-btn {
+  /* margin-left: 2rem; */
+}
+.searchBar.v-text-field {
+  /* margin-left: 3rem; */
+  max-width: 200px;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+.jajko {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+</style>

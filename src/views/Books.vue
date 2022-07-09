@@ -71,10 +71,11 @@
 <script>
 import EditBook from "../components/EditBook.vue";
 import EditItemWrapper from "../components/EditItemWrapper.vue";
-import { mapActions } from "vuex";
+
 import DetailsWrapper from "../components/DetailsWrapper.vue";
 import BooksDetails from "../components/BooksDetails.vue";
 import { mapState } from "vuex";
+import { mapActions } from "vuex";
 
 export default {
   name: "Books",
