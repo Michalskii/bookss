@@ -38,7 +38,7 @@ export default {
 }
 
 .mainSection {
-  margin-top: 50px;
+  margin-top: 5px;
 }
 .links {
   padding: 20px;
