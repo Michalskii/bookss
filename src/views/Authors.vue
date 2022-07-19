@@ -28,26 +28,29 @@
     >
       <authors-details :author="item" />
     </details-wrapper>
+    <div class="btnsearch">
+      <v-btn
+        color="primary"
+        dark
+        @click="
+          createItem();
+          editItem();
+          dialogTitle = 'Add author';
+        "
+      >
+        Add new author
+      </v-btn>
 
-    <v-btn
-      color="primary"
-      dark
-      @click="
-        createItem();
-        editItem();
-        dialogTitle = 'Add author';
-      "
-    >
-      Add new author
-    </v-btn>
-
-    <v-text-field
-      v-model="search"
-      append-icon="mdi-magnify"
-      label="Search"
-      single-line
-      hide-details
-    />
+      <v-text-field
+        v-model="search"
+        append-icon="mdi-magnify"
+        label="Search"
+        single-line
+        outlined
+        class="searchBar"
+        hide-details
+      />
+    </div>
 
     <v-data-table
       :headers="headers"
@@ -55,7 +58,7 @@
       :search="search"
       @click:row="showDetails"
       :items-per-page="5"
-      class="elevation-2"
+      class="elevation-2 my-data-table"
       :custom-filter="filter"
     >
       <template v-slot:[`item.actions`]="{ item }">
@@ -194,3 +197,12 @@ export default {
   },
 };
 </script>
+
+<style>
+.searchBar.v-text-field {
+  /* margin-left: 3rem; */
+  max-width: 200px;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+</style>

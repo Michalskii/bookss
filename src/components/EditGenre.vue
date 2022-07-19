@@ -21,7 +21,7 @@
         </v-btn>
         <v-btn
           color="blue darken-1"
-          :disabled="isDisabled"
+          :disabled="!isDisabled"
           text
           @click="saveEditedItem()"
         >

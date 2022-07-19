@@ -10,13 +10,6 @@
                 label="Name"
               ></v-text-field>
             </v-col>
-            <!-- <v-col cols="12" sm="6" md="4">
-              <v-text-field
-                v-model="editedItem.yearBorn"
-                label="Year born"
-                @keypress="validateNum"
-              ></v-text-field>
-            </v-col> -->
           </v-row>
         </v-container>
       </v-card-text>
@@ -28,7 +21,7 @@
         </v-btn>
         <v-btn
           color="blue darken-1"
-          :disabled="isDisabled"
+          :disabled="!isDisabled"
           text
           @click="saveEditedItem()"
         >

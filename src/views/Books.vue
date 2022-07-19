@@ -1,17 +1,5 @@
 <template>
   <div>
-    <v-btn
-      color="primary"
-      dark
-      @click="
-        createBook();
-        editItem();
-        dialogTitle = 'Add book';
-      "
-    >
-      Add new book
-    </v-btn>
-
     <edit-item-wrapper
       @close="closeDialog"
       v-if="editDialog"
@@ -34,15 +22,29 @@
     >
       <books-details :book="item"> </books-details>
     </details-wrapper>
+    <div class="btnsearch">
+      <v-btn
+        color="primary"
+        dark
+        @click="
+          createBook();
+          editItem();
+          dialogTitle = 'Add book';
+        "
+      >
+        Add new book
+      </v-btn>
 
-    <v-text-field
-      v-model="search"
-      append-icon="mdi-magnify"
-      label="Search"
-      single-line
-      hide-details
-    />
-
+      <v-text-field
+        v-model="search"
+        append-icon="mdi-magnify"
+        label="Search"
+        single-line
+        outlined
+        class="searchBar"
+        hide-details
+      />
+    </div>
     <v-data-table
       :headers="headers"
       :items="books"
@@ -50,7 +52,7 @@
       @click:row="showDetails"
       :items-per-page="5"
       :custom-filter="filter"
-      class="elevation-2"
+      class="elevation-2 my-data-table"
     >
       <template v-slot:[`item.actions`]="{ item }">
         <v-icon small @click.stop="deleteItem(item)"> mdi-delete </v-icon>

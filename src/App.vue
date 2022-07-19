@@ -1,9 +1,13 @@
 <template>
   <v-app>
-    <nav class="nav">
-      <v-btn class="" to="/books">books</v-btn>
-      <v-btn to="/authors">authors</v-btn>
-      <v-btn to="/genres">genres</v-btn>
+    <nav class="nav text-center">
+      <router-link class="links" to="/books">Books</router-link>
+      <router-link class="links" to="/authors">Authors</router-link>
+      <router-link class="links" to="/genres">Genres</router-link>
+
+      <!-- <v-btn class="links" to="/books">books</v-btn>
+      <v-btn class="links" to="/authors">authors</v-btn>
+      <v-btn class="links" to="/genres">genres</v-btn> -->
     </nav>
 
     <v-main class="mainSection">
@@ -22,19 +26,27 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap");
 
 .nav {
-  margin: auto;
-  margin-top: 100px;
+  margin-top: 0px;
+
   font-family: "Montserrat", sans-serif;
-  border: 1px solid;
-  border-radius: 50px;
-  padding: 30px;
+  padding: 10px;
+  background: #eceff1;
 }
 
 .mainSection {
   margin-top: 50px;
 }
+.links {
+  padding: 20px;
+  text-decoration: none;
+  font-size: 2rem;
+  color: #455a64;
+}
+/* .links.v-application a {
+  color: red;
+} */
 </style>

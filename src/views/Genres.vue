@@ -29,7 +29,7 @@
       <genre-details :genre="item" />
     </details-wrapper>
 
-    <div class="jajko">
+    <div class="btnsearch">
       <v-btn
         color="primary addNew"
         dark
@@ -195,19 +195,19 @@ export default {
 
 <style  >
 .my-data-table.v-data-table {
-  margin-left: 3rem;
-  margin-right: 3rem;
+  /* margin-left: 3rem;
+  margin-right: 3rem; */
   margin-top: 1rem;
   border-radius: 30px;
 
   background: rgba(248, 248, 248, 0.3);
+  /* background: #eceff1; */
 }
 .v-data-table > .v-data-table__wrapper > table > tbody > tr > td,
 .v-data-table > .v-data-table__wrapper > table > thead > tr > td,
 .v-data-table > .v-data-table__wrapper > table > tfoot > tr > td {
   font-size: 0.875rem;
   height: 48px;
-  color: red;
 }
 
 .addNew.v-btn {
@@ -216,13 +216,13 @@ export default {
 .searchBar.v-text-field {
   /* margin-left: 3rem; */
   max-width: 200px;
-  margin-top: 1.5rem;
+  margin-top: 0.5rem;
   margin-bottom: 0.5rem;
 }
-.jajko {
+.btnsearch {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  margin: 2%;
+  justify-content: space-between;
+  align-items: baseline;
 }
 </style>
